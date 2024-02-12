@@ -7,10 +7,22 @@
     <meta name="description" content="Riversdale Ortho Teeth Extraction Form Tool">
     <!-- STYLING-->
     <style>
+        @font-face {
+            font-family: Lucida-Grande-Light;
+            src: url(fonts/LucidaGrandeRegular.ttf);
+        }
+
+        @font-face {
+            font-family: Lucida-Grande-Bold;
+            src: url(fonts/LucidaGrandeBold.ttf);
+        }
+
+        @font-face {
+            font-family: Lucida-Grande;
+            src: url(fonts/LucidaGrandeRegular.ttf);
+        }
+
         /* General styling and typography */
-        body {}
-
-
         .hidden {
             display: none;
         }
@@ -23,19 +35,18 @@
         input {
             display: inline-flex;
             background: none;
-            font-family: 'Dax-Medium', Helvetica, Arial, 'sans-serif';
+            font-family: 'Lucida-Grande', Helvetica, Arial, 'sans-serif';
             font-size: 10pt;
             padding-top: 2mm;
         }
-
         .bold {
             font-size: 10pt;
-            font-family: 'Dax-Bold', Helvetica, Arial, 'sans-serif';
+            font-family: 'Lucida-Grande-Bold', Helvetica, Arial, 'sans-serif';
             font-weight: bold;
         }
 
         select.inline-selector {
-            font-family: 'Dax-Medium', Helvetica, Arial, 'sans-serif';
+            font-family: 'Lucida-Grande', Helvetica, Arial, 'sans-serif';
             background: none;
             border: none;
             -webkit-appearance: none;
@@ -84,8 +95,8 @@
         }
 
         .textBox.nameEntry {
-            margin-left: 10mm;
-            width: 72mm;
+            margin-left: 5mm;
+            width: 60mm;
             text-decoration: underline;
             height: 16mm;
         }
@@ -110,7 +121,7 @@
         }
 
         #regards {
-            font-family: Dax-Medium;
+            font-family: 'Lucida-Grande', Helvetica, Arial, 'sans-serif';
             font-size: 10pt;
             margin-bottom: 25mm;
             font-weight: normal;
@@ -136,16 +147,18 @@
             grid-area: 1 / 1 / 7 / 6;
             width: 100%;
         }
-        #bg-letterhead img{
+
+        #bg-letterhead img {
             width: 100%;
         }
+
         #attention {
             grid-area: attention;
         }
 
         #dateAttach {
             grid-area: date;
-            padding-left: 5mm;
+            padding-left: 0mm;
         }
 
         #patient {
@@ -169,20 +182,25 @@
         #attachment {
             grid-area: attachment;
         }
-        .enclosedForm-container{
+
+        .enclosedForm-container {
+            padding-top: 3mm;;
             display: flex;
             align-items: center;
         }
+
         #enclosedForm {
             width: 70%;
             /* margin-left: 3mm; */
             display: flex;
             align-items: center;
         }
-        
+
         #enclosedForm label {
             padding: 0 1mm;
+            /* font-size: 9pt; */
         }
+
         #otherLabel {
             width: 20%;
         }
@@ -203,7 +221,7 @@
 
         /* SVG Digaram styling*/
         svg {
-            font-family: 'Dax-Medium', 'Roboto', Helvetica, Arial, 'sans-serif';
+            font-family: 'Lucida-Grande-Bold', 'Roboto', Helvetica, Arial, 'sans-serif';
         }
 
         .visGrid {
@@ -440,7 +458,7 @@
             <img src="./assets/bg-letterhead.png" />
 
         </div>
-        
+
         <!-- DATE AND ATTENTION PRACTITIONER FIELDS -->
         <div id="attention">
             <div class='label bold'>Attention:</div>
@@ -449,8 +467,8 @@
         <!-- DATE AND ATTACHMENT FIELDS -->
         <div id="dateAttach">
             <div id="formDateLabel" class='label bold'>Date:</div>
-            <input id="formDate" type="date"class='field'></input>
-            <div class = 'enclosedForm-container'>
+            <input id="formDate" type="date" class='field'></input>
+            <div class='enclosedForm-container'>
                 <div id="enclosedLabel" class='label bold'>Enclosed:</div>
                 <form id="enclosedForm" class='inline-selector field'>
                     <input type="checkbox" name="" value="">
@@ -462,9 +480,9 @@
                 </form>
             </div>
 
-            </div>
-            <div id="otherLabel" class='label bold'></div>
-            <div id="otherAttachment" class='field name'></div>
+        </div>
+        <div id="otherLabel" class='label bold'></div>
+        <div id="otherAttachment" class='field name'></div>
         </div>
         <!-- PATIENT INFORMATION FIELDS -->
         <div id="patient">
