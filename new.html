@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Riversdale Ortho Teeth Extraction Form Tool">
+    <!-- STYLING-->
+    <style>
+        /* General styling and typography */
+        body {}
+
+
+        .hidden {
+            display: none;
+        }
+
+        .label,
+        .field,
+        .inline-selector,
+        .textBox,
+        #tooltip,
+        input {
+            display: inline-flex;
+            background: none;
+            font-family: 'Dax-Medium', Helvetica, Arial, 'sans-serif';
+            font-size: 10pt;
+            padding-top: 2mm;
+        }
+
+        .bold {
+            font-size: 10pt;
+            font-family: 'Dax-Bold', Helvetica, Arial, 'sans-serif';
+            font-weight: bold;
+        }
+
+        select.inline-selector {
+            font-family: 'Dax-Medium', Helvetica, Arial, 'sans-serif';
+            background: none;
+            border: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        }
+
+        input {
+            border: none;
+        }
+
+        textarea {
+            border: none;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 7mm;
+        }
+
+        li {
+            margin: 0;
+            padding-bottom: 0.25rem;
+        }
+
+        #formDateLabel,
+        #enclosedLabel {
+            width: 20%
+        }
+
+        #formDate {
+            width: 54%
+        }
+
+        #title {
+            margin-left: 2.75mm;
+            width: 60%;
+        }
+
+        .field {
+            /*border-bottom: dashed 0.5px #000;*/
+            width: 50%;
+            margin-left: 1rem;
+            text-align: left;
+        }
+
+        .textBox.nameEntry {
+            margin-left: 10mm;
+            width: 72mm;
+            text-decoration: underline;
+            height: 16mm;
+        }
+
+        .label.name {
+            width: 30%;
+        }
+
+        .field.name {
+            width: 60%;
+        }
+
+        .patient.field.name {
+            font-weight: bold;
+        }
+
+        .textBox {
+            padding: 2mm;
+            line-height: 1.5;
+            height: -webkit-fill-available;
+            width: 92.5%;
+        }
+
+        #regards {
+            font-family: Dax-Medium;
+            font-size: 10pt;
+            margin-bottom: 25mm;
+            font-weight: normal;
+            margin-left: 4mm
+        }
+
+        /* Layout */
+        #toothExtraction-form {
+            display: grid;
+            grid-template-columns: 20mm 80mm 6mm 94mm 20mm;
+            grid-template-rows: 50mm 23mm 5mm 30mm 35mm 80mm 27mm;
+            grid-template-areas:
+                ". . . . ."
+                ". attention . date ."
+                ". attention . . ."
+                ". patient   . dia ."
+                ". treatment . dia ."
+                ". treatment . dia ."
+                ". . . dia ."
+        }
+
+        #bg-letterhead {
+            grid-area: 1 / 1 / 7 / 6;
+            width: 100%;
+        }
+        #bg-letterhead img{
+            width: 100%;
+        }
+        #attention {
+            grid-area: attention;
+        }
+
+        #dateAttach {
+            grid-area: date;
+            padding-left: 5mm;
+        }
+
+        #patient {
+            grid-area: patient;
+        }
+
+        #treatment {
+            grid-area: treatment;
+            /*height: auto;*/
+        }
+
+        #treatmentText {
+            /*border: 0.5px dashed #000;*/
+            height: 80%;
+        }
+
+        #teethDiagram-container {
+            grid-area: dia;
+        }
+
+        #attachment {
+            grid-area: attachment;
+        }
+        .enclosedForm-container{
+            display: flex;
+            align-items: center;
+        }
+        #enclosedForm {
+            width: 70%;
+            /* margin-left: 3mm; */
+            display: flex;
+            align-items: center;
+        }
+        
+        #enclosedForm label {
+            padding: 0 1mm;
+        }
+        #otherLabel {
+            width: 20%;
+        }
+
+        #otherAttachment {
+            width: 70%;
+            height: 15mm;
+        }
+
+        #treatmentText .deciduous,
+        #treatmentText .permanent {
+            text-decoration: underline;
+        }
+
+        #drRO {
+            margin-top: 3mm;
+        }
+
+        /* SVG Digaram styling*/
+        svg {
+            font-family: 'Dax-Medium', 'Roboto', Helvetica, Arial, 'sans-serif';
+        }
+
+        .visGrid {
+            stroke: #000;
+            stroke-width: 0.5px;
+            fill: none;
+        }
+
+        .visLabel {
+            font-weight: bold;
+            font-size: 6px;
+            text-anchor: middle;
+        }
+
+        .visLabel.small {
+            font-size: 4px;
+        }
+
+        .toothIdLabel {
+            font-weight: bold;
+            font-size: 3px;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .toothPart {
+            pointer-events: visible;
+        }
+
+        .toothPath {
+            stroke: #000;
+            stroke-width: 0.25px;
+            fill: none;
+        }
+
+        .toothPath.toothMiddle {
+            stroke: none;
+        }
+
+        .toothCross {
+            fill: none;
+            pointer-events: none;
+        }
+
+        .toothCross.extract {
+            fill: red;
+        }
+
+        .tooth-group {
+            cursor: pointer;
+        }
+
+        .toothPart.assess {
+            fill: grey;
+        }
+
+        .toothPart.treat,
+        .toothPart.treatAll {
+            fill: aqua;
+        }
+
+        .toothPart.assessManage {
+            fill: lightblue;
+        }
+
+        .toothPart.restore {
+            fill: blue;
+        }
+
+        .toothPart.expose {
+            fill: lightgreen;
+        }
+
+        .toothPart:hover {
+            fill: fuchsia;
+        }
+
+        /* Coloured tooth parts for testing */
+        .toothPart.Mesial.displayColour {
+            fill: #052D97;
+        }
+
+        .toothPart.Palatial.displayColour {
+            fill: #83DBFA;
+        }
+
+        .toothPart.Distal.displayColour {
+            fill: #64B130;
+        }
+
+        .toothPart.Labial.displayColour {
+            fill: #FEFE34;
+        }
+
+        .toothPart.Lingual.displayColour {
+            fill: #9D9D9D;
+        }
+
+        .toothPart.Buccal.displayColour {
+            fill: #64048D;
+        }
+
+        .toothPart.Occusal.displayColour {
+            fill: #D60D06;
+        }
+
+        .toothPart.Incisal.displayColour {
+            fill: #FA5108;
+        }
+
+        /* Tooltip */
+        #tooltip {
+            display: block;
+            position: absolute;
+            color: #fff;
+            width: 370px;
+            padding: 5px 5px;
+            margin-bottom: 10mm;
+            background: #000;
+            background-opacity: 0.8;
+            border: 0px;
+            border-radius: 8px;
+            z-index: 99;
+        }
+
+        #tooltip.hidden {
+            display: none;
+        }
+
+        #tooltip-container {}
+
+        #tip-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        #tip-header {
+            display: grid;
+            grid-template-columns: 20% 70%;
+            grid-template-rows: 50% 50%;
+        }
+
+        #tip-toothNumber {
+            font-size: 35px;
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        #tip-toothTitle {
+            grid-area: 1 / 2 / 2 / 3;
+        }
+
+        #tip-toothTitle div {
+            display: inline;
+            font-size: 16px;
+            margin-top: 10px;
+            line-height: 1.1;
+        }
+
+        #tip-toothSurface {
+            color: aqua;
+        }
+
+        #tip-instruction {
+            padding: 5px 5px 10px 5px;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        #tip-wholeTooth {
+            text-align: center;
+            font-size: 16px;
+        }
+
+        #tip-treatment-container {
+            padding: 5px 5px 10px 5px;
+        }
+
+        .actionType,
+        .treatmentType,
+        .treatmentButton {
+            display: inline-grid;
+            padding: 2px 5px;
+            margin-top: 5px;
+            /*border: 0.5px dashed #fff;*/
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .treatmentButton {
+            width: calc(50% - 15px);
+            text-align: center
+        }
+
+        .actionType:hover,
+        .treatmentType:hover {
+            background: lightgrey;
+            border: 0.5px solid #fff;
+            color: #000;
+        }
+
+        .actionType.selected,
+        .treatmentType.selected {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+        }
+
+        .treatmentButton:hover {
+            background: #000;
+            border: 1.5px solid #fff;
+            color: #fff;
+        }
+
+        .treatmentLabel {
+            display: inline-grid;
+            padding-right: 3px;
+            width: 20%;
+        }
+
+        .treatmentTipHeader {
+            display: inline-grid;
+            padding-right: 3px;
+            padding-bottom: 5px
+        }
+    </style>
+</head>
+
+<body>
+    <!-- EXTRACTION FORM -->
+    <main id='toothExtraction-form'>
+        <!-- LETTERHEAD BACKGROUND -->
+        <div id="bg-letterhead">
+            <img src="./assets/bg-letterhead.png" />
+
+        </div>
+        
+        <!-- DATE AND ATTENTION PRACTITIONER FIELDS -->
+        <div id="attention">
+            <div class='label bold'>Attention:</div>
+            <div id="practitioner" class='nameEntry textBox'></div>
+        </div>
+        <!-- DATE AND ATTACHMENT FIELDS -->
+        <div id="dateAttach">
+            <div id="formDateLabel" class='label bold'>Date:</div>
+            <input id="formDate" type="date"class='field'></input>
+            <div class = 'enclosedForm-container'>
+                <div id="enclosedLabel" class='label bold'>Enclosed:</div>
+                <form id="enclosedForm" class='inline-selector field'>
+                    <input type="checkbox" name="" value="">
+                    <label for=""> OPG </label><br>
+                    <input type="checkbox" name="" value="">
+                    <label for="">CBCT images</label><br>
+                    <input type="checkbox" name="" value="">
+                    <label for="">Photo marking relevant teeth</label>
+                </form>
+            </div>
+
+            </div>
+            <div id="otherLabel" class='label bold'></div>
+            <div id="otherAttachment" class='field name'></div>
+        </div>
+        <!-- PATIENT INFORMATION FIELDS -->
+        <div id="patient">
+            <div>
+                <div class='label bold'>Patient information:</div>
+            </div>
+            <div id="patientInfo" class='nameEntry'>
+                <div>
+                    <div class='label name'>First name:</div><input id="patientFirstName" class='patient field name'
+                        oninput="methods.updateTreatmentName()"></input>
+                </div>
+                <div>
+                    <div class='label name'>Last name:</div><input id="patientLastName"
+                        class='patient field name'></input>
+                </div>
+                <div>
+                    <div class='label name'>Date of birth:</div><input id="patientDoB"
+                        class='patient field name'></input>
+                </div>
+            </div>
+        </div>
+
+        <!-- TREATMENT INFORMATION FIELDS -->
+        <div id="treatment">
+            <div id="treatmentString" class="bold">Please provide the following treatment:</div>
+            <br>
+            <div id="treatmentText" class="textBox"></div>
+            <div id="regards">Kind regards,</div>
+            <select id="drRO" class='inline-selector field'>
+                <option selected="selected" disabled>-- Select practioner --</option>
+                <option>PAUL SCHNEIDER</option>
+                <option>CHRIS THEODOSI</option>
+                <option>ALWYN WONG</option>
+                <option>MARIE CORNELIS</option>
+                <option>MATTHEW KEI</option>
+            </select>
+        </div>
+
+        <!-- TOOTH DIAGRAM -->
+        <div id="teethDiagram-container">
+            <svg id="teethDiagram" width="100%" height="100%" viewBox="-1.5 -115 3 168">
+                <g transform="translate(0, -30)">
+                    <!-- Diagram background elements -->
+                    <g id="teethVis-background">
+                        <path id="grid_yAxis" class="visGrid" fill="none" d="M0-60v122.5" />
+                        <path id="gridH_xAxis" class="visGrid" fill="none" d="M40 0h-80" />
+                        <text id="label_UPPER" class="visLabel" x="0" y="-70">UPPER</text>
+                        <text id="label_LOWER" class="visLabel" x="0" y="75">LOWER</text>
+                        <text id="label_LA_upper" class="visLabel small">
+                            <tspan x="0" y="-63">Labial</tspan>
+                        </text>
+                        <text id="label_LA_lower" class="visLabel small">
+                            <tspan x="0" y="67.5">Labial</tspan>
+                        </text>
+                        <rect x="-10" y="-20" width="30" height="8" fill="#fff"></rect>
+                        <text id="label_LI_upper" class="visLabel small">
+                            <tspan x="0" y="-15">Lingual</tspan>
+                        </text>
+                        <rect x="-10" y="11" width="30" height="8" fill="#fff"></rect>
+                        <text id="label_LI_upper" class="visLabel small">
+                            <tspan x="0" y="16.25">Lingual</tspan>
+                        </text>
+                    </g>
+                    <!-- Teeth by chldren and adults -->
+                    <g id="deciduousTeeth-group"></g>
+                    <g id="permanentTeeth-group"></g>
+                </g>
+            </svg>
+        </div>
+    </main>
+
+    <!-- TOOLTIP -->
+    <div id="tooltip" class="hidden">
+        <div id="tooltip-container">
+            <div id="tip-header">
+                <div id="tip-toothNumber"></div>
+                <div id="tip-toothTitle">
+                    <div id="tip-toothName"></div> - <div id="tip-toothSurface"></div>
+                </div>
+            </div>
+            <div id="tip-instruction"></div>
+            <div id="tip-wholeTooth" class="bold"></div>
+            <div id="tip-treatment-container">
+                <div class="treatmentTipHeader bold">Treatment options:</div>
+                <div id="tip-treatment">
+                    <div class="treatmentLabel bold">Action:</div>
+                    <div id="restore" class="treatmentType">Restore</div>
+                    <div id="assessManage" class="treatmentType">Assess and manage</div>
+                </div>
+                <div id="tip-treatmentType">
+                    <div class="treatmentLabel bold">Area:</div>
+                    <div id="pit" class="actionType">Pit</div>
+                    <div id="fissure" class="actionType">Fissure</div>
+                    <div id="groove" class="actionType">Groove</div>
+                    <div id="blank" class="actionType">Blank</div>
+                    <br>
+                    <div class="treatmentLabel bold"></div>
+                    <div id="whole" class="actionType">Select the whole tooth</div>
+                </div>
+            </div>
+            <hr>
+            <div id="tip-options">
+                <div id="removeSurfaceTreatment" class="treatmentButton">Remove or cancel</div>
+                <div id="confirmSurfaceTreatment" class="treatmentButton">Add to request</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>         -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"
+        integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Extraction form tool script -->
+    <script>
+        const data = {}, action = {}
+        let tooltipDiv
+
+        // Build from GSheet data
+        Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRHiov9jIvgvn3uOTBz3xvRrN4lmwsp8bI-O9Jcj-DZDmr4aSuPIVbhEfaRH0B-_q68Lv3ySbaKUcJA/pub?gid=0&single=true&output=tsv',
+            {
+                delimiter: '\t',
+                download: true,
+                header: true,
+                complete: (d) => {
+                    data.byId = {}
+                    data.reportOrder = []
+
+                    d.data.forEach(obj => {
+                        obj.toothID = +obj.toothID
+                        obj.rotation = +obj.rotation
+                        obj.xPos = +obj.xPos
+                        obj.yPos = +obj.yPos
+                        obj.reportOrder = +obj.reportOrder
+                        action[obj.toothID] = {
+                            extract: false,
+                            expose: false,
+                            surface: {
+                                [obj.name_Q1]: {},
+                                [obj.name_Q2]: {},
+                                [obj.name_Q3]: {},
+                                [obj.name_Q4]: {},
+                                [obj.name_middle]: {}
+                            }
+                        }
+                        data.byId[obj.toothID] = {
+                            name: obj.toothName,
+                            type: obj.type,
+                            Q1: obj.name_Q1,
+                            Q2: obj.name_Q2,
+                            Q3: obj.name_Q3,
+                            Q4: obj.name_Q4,
+                            middle: obj.name_middle
+                        }
+                        data.reportOrder.push(obj.reportOrder)            // List the tooth reporting order
+                    })
+
+                    d3.selectAll('.field, .textBox').attr('contenteditable', true)       // Setup editable fields        
+                    data.allToothData = d.data                      // Store data  
+                    renderForm(data.allToothData)
+                }
+            })
+
+
+        // Function to render form
+        function renderForm(toothData) {
+            // 1. Filter and store datasets for deciduous (child) and permanent (adult) teeth
+            data.deciduous = toothData.filter(d => d.type === 'deciduous')
+            data.permanent = toothData.filter(d => d.type === 'permanent')
+
+            // 2. Render all child teeth
+            data.deciduous.forEach(obj => addToothGroup(obj))
+            data.permanent.forEach(obj => addToothGroup(obj))
+
+            // X. Function to add indivudal teeth
+            function addToothGroup(data) {
+                // 1. Add tooth group
+                const group = data.type === 'deciduous' ? d3.select('#deciduousTeeth-group') : d3.select('#permanentTeeth-group'),
+                    toothGroup = group.append('g').attr('id', 'tooth_' + data.toothID)
+                        .classed('tooth-group ' + data.type, true)
+
+                // 2. Add tooth middle and each tooth quadrant 
+                const toothParts = toothGroup.append('g').attr('id', 'toothParts_' + data.toothID)
+                toothParts.append('circle').attr('id', 'tooth' + data.toothID + '-middle')
+                    .classed('toothPath toothMiddle toothPart ' + data.name_middle + ' ' + data.type, true)
+                    .attr('surface', data.name_middle)
+                    .attr('cx', 0).attr('cy', 0)
+                    .attr('r', 1.75)
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q1')
+                    .classed('toothPath toothQ1 toothPart ' + data.name_Q1 + ' ' + data.type, true)
+                    .attr('surface', data.name_Q1)
+                    .attr('d', "m 0,-3.5 v 1.8781307 A 1.6218661,1.622089 0 0 1 1.6216492,0 H 3.5 A 3.4998614,3.5003425 0 0 0 0,-3.5 Z")
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q2')
+                    .classed('toothPath toothQ2 toothPart ' + data.name_Q2 + ' ' + data.type, true)
+                    .attr('surface', data.name_Q2)
+                    .attr('d', "M 0,3.5 V 1.6218693 A 1.6218657,1.622089 0 0 0 1.6216497,0 H 3.5 A 3.4998606,3.5003426 0 0 1 0,3.5 Z")
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q3')
+                    .classed('toothPath toothQ3 toothPart ' + data.name_Q3 + ' ' + data.type, true)
+                    .attr('surface', data.name_Q3)
+                    .attr('d', "M 0,3.5 V 1.6218693 A 1.6218661,1.622089 0 0 1 -1.6216492,0 H -3.5 A 3.4998615,3.5003426 0 0 0 0,3.5 Z")
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q4')
+                    .classed('toothPath toothQ3 toothPart ' + data.name_Q4 + ' ' + data.type, true)
+                    .attr('surface', data.name_Q4)
+                    .attr('d', "m 0,-3.5 v 1.8781307 A 1.6218661,1.622089 0 0 0 -1.6216492,0 H -3.5 A 3.4998614,3.5003425 0 0 1 0,-3.5 Z")
+
+                // 3. Add tooth extraction cross mark
+                const toothCross = toothGroup.append('g').attr('id', 'extract-' + data.toothID)
+                    .classed('toothCross', true)
+                toothCross.append('path').classed('toothCrossMark', true)
+                    .attr('d', "M-.196-3.902h.664v7.579h-.664z")
+                    .attr('transform', 'rotate(-45)')
+                toothCross.append('path').classed('toothCrossMark', true)
+                    .attr('d', "M-.444-3.926H.22v7.579h-.664z")
+                    .attr('transform', 'rotate(45)')
+
+                // 4. Add tooth label
+                const toothQuadrant = (data.side === 'right') ? (data.section === 'upper') ? 'q1' : 'q2' : (data.section === 'upper') ? 'q4' : 'q3'
+                yOffset = 13,
+                    labelOffset = 6,
+                    angleFromX = Math.atan((Math.abs(data.yPos) - yOffset) / Math.abs(data.xPos))
+
+                // a. Determine label position object
+                let labelPos = { permanent: {}, deciduous: {} }
+                if (toothQuadrant === 'q1') {
+                    labelPos.permanent.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = - Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = + Math.sin(angleFromX) * labelOffset
+                } else if (toothQuadrant === 'q2') {
+                    labelPos.permanent.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = + Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = - Math.sin(angleFromX) * labelOffset
+                } else if (toothQuadrant === 'q3') {
+                    labelPos.permanent.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = + Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = - Math.sin(angleFromX) * labelOffset
+                } else if (toothQuadrant === 'q4') {
+                    labelPos.permanent.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = - Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = + Math.sin(angleFromX) * labelOffset
+                }
+
+                // b. Append tooth ID label
+                toothGroup.append('text').attr('id', 'label-' + data.toothID)
+                    .classed('toothIdLabel', true)
+                    .attr('dy', 1.5)
+                    .attr('x', labelPos[data.type].x).attr('y', labelPos[data.type].y)
+                    .text(data.toothID)
+
+                // 5. Add transforms
+                toothGroup.attr('transform', 'translate(' + data.xPos + ',' + data.yPos + ')')      // Move the whole group into position
+                toothParts.style('transform', 'rotate(' + data.rotation + 'deg)')               // Rotate tooth parts
+
+                // 6. Add event listeners
+                // a. Tooth group double click to cylce betweeen extract, expose and nothing
+                d3.selectAll('.tooth-group')
+                    // .on('click',  function(){d3.event.stopPropagation()} )
+                    .on('dblclick', methods.updateToothAction)
+
+                //b. Attach all tooth surface events
+                d3.selectAll('.toothPath')
+                    .on('click', function () { methods.toolTipActive(this, d3.event.pageX, d3.event.pageY) })
+                    .on('dblclick', methods.updateToothAction)
+                    .on("mouseover", function () { methods.toolTipOn(this, d3.event.pageX, d3.event.pageY) })
+                    .on("mouseout", () => d3.select('#tooltip').classed('hidden', true))
+
+                // 6. Add reset tooltip click to body
+                d3.select('#teethDiagram').on('click', methods.resetTooltips)
+
+            }; // end addToothGroup
+        }; // end renderFrom}
+
+        // Interaction methods
+        const methods = {
+            updateTreatmentName: () => {
+                d3.select('#treatmentString').html('Please provide the following treatment for ' + document.getElementById("patientFirstName").value + ':')
+            },
+
+            resetTooltips: () => {
+                d3.selectAll('.toothPart').classed('assess', false)                             // Clear any surfaces marked as being in assess highlight mode
+                d3.select('#tooltip').transition().duration(200).style("opacity", 0)
+                d3.selectAll('.tooth-group').transition().duration(200).style('opacity', 1)
+                setTimeout(() => { d3.select('#tooltip').classed('hidden', true) }, 200)
+
+                d3.selectAll('.toothPath')
+                    .on('click', function () { methods.toolTipActive(this, d3.event.pageX, d3.event.pageY) })
+                    .on("mouseover", function () { methods.toolTipOn(this, d3.event.pageX, d3.event.pageY) })
+                    .on("mouseout", () => d3.select('#tooltip').classed('hidden', true))
+            },
+
+            updateToothAction: function () {
+                d3.event.stopPropagation()
+                const id = this.id.slice(5, 7)
+
+                // a. Cycle through possible status:
+                // i.  No status > Expose
+                if (!action[id].extract && !action[id].expose) {
+                    action[id]['expose'] = true
+                    d3.selectAll('#tooth' + id + '-middle,#tooth' + id + '-Q1, #tooth' + id + '-Q2, #tooth' + id + '-Q3, #tooth' + id + '-Q4').classed('expose', true)
+                    d3.selectAll('#toothParts_' + id + ' *').on('click', null)
+                    d3.select('#tip-treatment-container').classed('hidden', true)
+                    d3.select('#tip-wholeTooth').classed('hidden', false).html('Requested for exposure')
+
+                    // ii. Expose to extract
+                } else if (!action[id].extract && action[id].expose) {
+                    action[id].expose = false
+                    action[id].extract = true
+                    d3.selectAll('#tooth' + id + '-middle,#tooth' + id + '-Q1, #tooth' + id + '-Q2, #tooth' + id + '-Q3, #tooth' + id + '-Q4').classed('expose', false).classed('assess', false)
+                    d3.select('#extract-' + id).classed('extract', true)
+                    d3.select('#tip-wholeTooth').classed('hidden', false).html('Requested for extraction')
+
+                    // iii. Extract to no status
+                } else if (action[id].extract && !action[id].expose) {
+                    action[id].expose = false
+                    action[id].extract = false
+                    d3.select('#extract-' + id).classed('extract', false)
+                    d3.select('#tip-treatment-container').classed('hidden', false)
+                    d3.select('#tip-wholeTooth').classed('hidden', true)
+                }
+
+                // b. Remove any previously selected surface actions
+                Object.keys(action[id]['surface']).forEach(name => action[id]['surface'][name] = {})     // From action data
+                d3.selectAll('.toothParts_' + id + ' *').classed('treat', false).classed('treatAll', false)    // and parts with treatment selection
+
+                // c. update commentary
+                methods.updateRequestText()
+            },
+
+            toolTipOn: function (el, x, y) {
+                d3.event.stopPropagation()
+                const id = el.id.slice(5, 7),
+                    toothQ = el.id.slice(el.id.indexOf('-') + 1),
+                    surfaceName = data.byId[id][toothQ]
+
+                d3.select('#tip-toothNumber').html(id + '.').classed('bold', true)
+                d3.select('#tip-toothName').html(data.byId[id].name).classed('bold', true)
+                d3.select('#tip-toothSurface').html(data.byId[id][toothQ]).classed('bold', true)
+                d3.select('#tooltip').classed('hidden', false)
+                    .style("left", (x - 150) + "px")
+                    .style("top", (y + 20) + "px")
+                    .transition().duration(0)
+                    .style("opacity", .75)
+
+                // A. DEFAULT: WHEN TOOTH ACTION HAS NOT BEEN REQUESTED YET
+                if (!action[id].extract && !action[id].expose) {
+                    d3.select('#tip-instruction').html('Tap any tooth surface to specify a treatment action or double tap any part of a tooth to cycle between actions for tooth extraction, exposure and none.')
+                    d3.selectAll('#tip-treatment-container, #tip-options, #tip-wholeTooth').classed('hidden', true)
+                    // B. WHEN TOOTH ACTION IS ALREADY REQUESTED
+                } else {
+                    d3.select('#tip-instruction').html('Double tap any part the tooth to change request')
+                    d3.selectAll('#tip-treatment-container').classed('hidden', true)
+                    d3.select('#tip-wholeTooth').classed('hidden', false)
+                }
+            },
+
+            toolTipActive: function (el, x, y) {
+                d3.event.stopPropagation()
+                const id = el.id.slice(5, 7),
+                    toothQ = el.id.slice(el.id.indexOf('-') + 1),
+                    surfaceName = data.byId[id][toothQ]
+
+                // A. FOR SURFACE TREATMENT
+                if (!action[id].extract && !action[id].expose) {
+                    // a. Higlight surface for assessment
+                    d3.selectAll('.toothPart:not(#' + el.id + ')').classed('assess', false)
+                    el.classList.add('assess')
+
+                    // b. Set tooltip
+                    d3.select('#tip-toothNumber').html(id + '.').classed('bold', true)
+                    d3.select('#tip-toothName').html(data.byId[id].name).classed('bold', true)
+                    d3.select('#tip-toothSurface').html(data.byId[id][toothQ]).classed('bold', true)
+                    d3.select('#tip-instruction').html('Specify a treatment and confirm to add to the request')
+                    d3.select('#tip-treatment-container').classed('hidden', false)
+                    d3.selectAll('#tip-options, #tip-wholeTooth').classed('hidden', true)
+
+                    // c. Show tooltip
+                    d3.select('#tooltip').classed('hidden', false)
+                        .style("left", (x - 150) + "px")
+                        .style("top", (y + 20) + "px")
+                        .transition().duration(200)
+                        .style("opacity", .75)
+
+                    // d. Fade out other teeth and disable interactions
+                    d3.selectAll('.tooth-group').transition().duration(200).style('opacity', 1)
+                    d3.selectAll('.tooth-group:not(#tooth_' + id).transition().duration(200).style('opacity', 0.2)
+                    d3.selectAll('.toothPath').on("mouseover", null).on("mouseout", null)
+                    d3.selectAll('.tooth-group').on('dblclick', null)
+
+                    // e. Select, show selected and record selections
+                    // i. Check for treatment action object for tooth             
+                    d3.selectAll('.actionType, .treatmentType').classed('selected', false)              // Clear all selections
+
+                    if (Object.keys(action[id]['surface'][surfaceName]).length !== 0) {                   // Add selections if action exists for the surface 
+                        d3.select('#' + action[id]['surface'][surfaceName].type).classed('selected', true)
+                        d3.select('#' + action[id]['surface'][surfaceName].action).classed('selected', true)
+                        d3.select('#tip-options').classed('hidden', false)
+                    }
+
+                    // ii. Event listeners Update selections visualisations visually and update the action records
+                    d3.selectAll('.actionType')
+                        .on('click', function () {
+                            this.classList.add('selected')                                                     // Visually update selection
+                            d3.selectAll('.actionType:not(#' + this.id + ')').classed('selected', false)
+                            action[id]['surface'][surfaceName].type = this.id
+                            if (action[id]['surface'][surfaceName].type && action[id]['surface'][surfaceName].action) {
+                                d3.select('#tip-options').classed('hidden', false)
+                            }
+                        })
+
+                    d3.selectAll('.treatmentType')
+                        .on('click', function () {
+                            this.classList.add('selected')          // Visuall update the tip box                    
+                            d3.selectAll('.treatmentType:not(#' + this.id + ')').classed('selected', false)
+                            action[id]['surface'][surfaceName].action = this.id
+                            if (action[id]['surface'][surfaceName].type && action[id]['surface'][surfaceName].action) {
+                                d3.select('#tip-options').classed('hidden', false)
+                            }
+                        })
+
+                    // iii. Event listener for add and remove from request buttons
+                    d3.select('#confirmSurfaceTreatment').on('click', () => {
+                        d3.selectAll('#toothParts_' + id + ' > *').classed('treatAll', false)
+                        methods.resetTooltips()
+                        methods.updateRequestText()
+                        el.classList.remove('assess')
+                        el.classList.add('treat')
+                        d3.select('#tooltip').classed('hidden', true)
+                    })
+
+                    d3.select('#removeSurfaceTreatment').on('click', () => {
+                        action[id]['surface'][surfaceName] = {}
+                        el.classList.remove('assess')
+                        el.classList.remove('treat')
+                        d3.selectAll('#toothParts_' + id + ' > *').classed('treatAll', false)
+                        d3.select('#tooltip').classed('hidden', true)
+                        methods.resetTooltips()
+                        methods.updateRequestText()
+                    })
+
+
+                    // B. WHEN WHOLE OF TOOTH ACTION IS SELECTED
+                } else {
+                    d3.select('#tip-instruction').html('Double tap any part the tooth to change request')
+                    d3.select('#tip-wholeTooth').classed('hidden', false)
+                }
+            },
+
+            updateRequestText: () => {
+                d3.select('#treatmentText *').remove()
+                const requestDiv = d3.select('#treatmentText').append('div'),
+                    requestList = requestDiv.append('ul')
+                treatmentOrder = ["extract", 'expose', 'restore', 'assessManage'],        // Listed as named in data objexts
+                    surfaceOrder = ["Mesial", "Distal", "Occlusal", "Buccal", "Labial", "Palatal", "Lingual", "Incisal"],
+                    sortedToothData = data.allToothData.sort((a, b) => a.reportOrder - b.reportOrder)
+
+                // 1. Create a treatement list for all affected tools (for re-ordering)                           
+                const treatmentData = []
+                sortedToothData.forEach(obj => {
+                    // a. Determine treatment type
+                    const treatment = (function () {
+                        if (action[obj.toothID].extract) {
+                            return 'extract'
+                        } else if (action[obj.toothID].expose) {
+                            return 'expose'
+                        } else {
+                            return (d3.sum(Object.values(action[obj.toothID].surface).map(d => Object.values(d).length)) > 0) ? 'surface' : null
+                        }
+                    }())
+
+                    // b. Arrange surface treatments by Restore and Aasees and manage
+                    const surfaceObj = { restore: {}, assessManage: {} },
+                        surfaceOrdered = []
+                    Object.keys(action[obj.toothID].surface).forEach(surfaceName => {
+                        if (action[obj.toothID].surface[surfaceName].action === 'restore') {
+                            surfaceObj.restore[surfaceName] = action[obj.toothID].surface[surfaceName].type
+                        } else if (action[obj.toothID].surface[surfaceName].action === 'assessManage') {
+                            surfaceObj.assessManage[surfaceName] = action[obj.toothID].surface[surfaceName].type
+                        }
+                    })
+
+                    // c. Push object to treatment data for parsing to text
+                    if (treatment) {
+                        treatmentData.push({
+                            toothID: obj.toothID,
+                            treatment: treatment,
+                            surfaceDetails: surfaceObj
+                        })
+                    }
+                })
+
+                // 2. Create request section text
+                const extractionIDs = treatmentData.filter(obj => obj.treatment === 'extract'),
+                    extractionIDarray = extractionIDs.map(d => d.toothID),
+                    exposureIDs = treatmentData.filter(obj => obj.treatment === 'expose'),
+                    exposureIDarray = exposureIDs.map(d => d.toothID),
+                    surfaceIDs = treatmentData.filter(obj => obj.treatment === 'surface')
+
+                const oppositeTeethGroups = [
+                    { pair: [18, 28], type: 'maxillary right and left third molars (18 and 28)' },
+                    { pair: [17, 27], type: 'maxillary right and left <span class = "permanent">permanent</span> second molars (17 and 27)' },
+                    { pair: [16, 26], type: 'maxillary right and left <span class = "permanent">permanent</span> first molars (16 and 26)' },
+                    { pair: [15, 25], type: 'maxillary right and left second bicuspids (15 and 25)' },
+                    { pair: [14, 24], type: 'maxillary right and left first bicuspids (14 and 24)' },
+                    { pair: [13, 23], type: 'maxillary right and left <span class = "permanent">permanent</span> first cuspids (13 and 23)' },
+                    { pair: [12, 22], type: 'maxillary right and left <span class = "permanent">permanent</span> lateral incisors (12 and 22)' },
+                    { pair: [11, 21], type: 'maxillary right and left <span class = "permanent">permanent</span> central incisors (11 and 21)' },
+
+                    { pair: [38, 48], type: 'mandibular left and right third molars (38 and 48)' },
+                    { pair: [37, 47], type: 'mandibular left and right <span class = "permanent">permanent</span> second molars (37 and 47)' },
+                    { pair: [36, 46], type: 'mandibular left and right <span class = "permanent">permanent</span> first molars (36 and 46)' },
+                    { pair: [35, 45], type: 'mandibular left and right second bicuspids (35 and 45)' },
+                    { pair: [34, 44], type: 'mandibular left and right first bicuspids (34 and 44)' },
+                    { pair: [33, 43], type: 'mandibular left and right <span class = "permanent">permanent</span> first cuspids (33 and 43)' },
+                    { pair: [32, 42], type: 'mandibular left and right <span class = "permanent">permanent</span> lateral incisors (32 and 42)' },
+                    { pair: [31, 41], type: 'mandibular left and right <span class = "permanent">permanent</span> central incisors (31 and 41)' },
+
+                    { pair: [55, 65], type: 'maxillary right and left <span class = "deciduous">deciduous</span> second molars (55 and 65)' },
+                    { pair: [54, 64], type: 'maxillary right and left <span class = "deciduous">deciduous</span> first molars (54 and 64)' },
+                    { pair: [53, 63], type: 'maxillary right and left <span class = "deciduous">deciduous</span> cuspids (53 and 63)' },
+                    { pair: [52, 62], type: 'maxillary right and left <span class = "deciduous">deciduous</span> lateral incisors (52 and 62)' },
+                    { pair: [51, 61], type: 'maxillary right and left <span class = "deciduous">deciduous</span> central incisors (51 and 61)' },
+
+                    { pair: [75, 85], type: 'mandibular left and right <span class = "deciduous">deciduous</span> second molars (75 and 85)' },
+                    { pair: [74, 84], type: 'mandibular left and right <span class = "deciduous">deciduous</span> first molars (74 and 84)' },
+                    { pair: [73, 83], type: 'mandibular left and right <span class = "deciduous">deciduous</span> cuspids (73 and 83)' },
+                    { pair: [72, 82], type: 'mandibular left and right <span class = "deciduous">deciduous</span> lateral incisors (72 and 82)' },
+                    { pair: [71, 81], type: 'mandibular left and right <span class = "deciduous">deciduous</span> central incisors (71 and 81)' },
+                ]
+
+                // Return exceptions
+                const extractPairs = oppositeTeethGroups.filter(obj => extractionIDarray.indexOf(obj.pair[0]) > -1 && extractionIDarray.indexOf(obj.pair[1]) > -1),
+                    exposurePairs = oppositeTeethGroups.filter(obj => exposureIDarray.indexOf(obj.pair[0]) > -1 && exposureIDarray.indexOf(obj.pair[1]) > -1)
+
+                // Ia. EXTRACTION: Exception case ALL BACK MOLARS
+                if (action['18'].extract && action['28'].extract && action['38'].extract && action['48'].extract) {
+                    requestList.append('li').html('EXTRACT all four third molars (18, 28, 38 and 48).')
+                    // Add all other extractions 
+                    extractionIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if ([18, 28, 38, 48].indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
+
+                    // Ia. EXTRACTION: Exception case SAME LEFT AND RIGHT
+                } else if (extractPairs.length > 0) {
+                    let exceptions = []
+                    extractPairs.forEach(pairObj => {
+                        requestList.append('li').html('EXTRACT ' + pairObj.type)
+                        exceptions = exceptions.concat(pairObj.pair)
+                    })
+                    // Add all other extractions 
+                    extractionIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if (exceptions.indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
+
+                    // Ic. EXTRACTION: STANDARD CASE                 
+                } else {
+                    extractionIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                    })
+                }
+
+                // IIa EXPOSURE: Exception case ALL BACK MOLARS
+                if (action['18'].expose && action['28'].expose && action['38'].expose && action['48'].expose) {
+                    requestList.append('li').html('EXPOSE all four third molars (18, 28, 38 and 48).')
+                    // Add all other extractions 
+                    exposureIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if ([18, 28, 38, 48].indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
+
+                    // IIb. EXPOSURE: Exception case SAME  LEFT AND RIGHT
+                } else if (exposurePairs.length > 0) {
+                    let exceptions = []
+                    exposurePairs.forEach(pairObj => {
+                        requestList.append('li').html('EXPOSE ' + pairObj.type)
+                        exceptions = exceptions.concat(pairObj.pair)
+                    })
+                    // Add all other extractions 
+                    exposureIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if (exceptions.indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXPOSE ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
+
+                    // IIc. EXPOSURE: STANDARD CASE                 
+                } else {
+                    exposureIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        requestList.append('li').html('EXPOSE ' + toothName + ' (' + toothID + ')')
+                    })
+                }
+
+                // SURFACE TREATMENTS: restore and assess / manage treatments, with specified area; or whole tooth
+                const restoreContainer = requestDiv.append('div').attr('id', 'restore-container'),
+                    restoreList = restoreContainer.append('ul'),
+                    assessManageContainer = requestDiv.append('div').attr('id', 'assessManage-container'),
+                    assessManageList = assessManageContainer.append('ul')
+
+                surfaceIDs.forEach(d => {
+                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+
+                    // III. RESTORE
+                    if (Object.keys(d.surfaceDetails.restore).length > 0) {           // Check for restore
+                        const areasToTreat = Object.values(d.surfaceDetails.restore)
+
+                        // Case A: Whole of tooth selected         
+                        if (areasToTreat.indexOf('whole') > -1) {
+                            d3.selectAll('#toothParts_' + toothID + ' > *').classed('treatAll', true)
+                            restoreList.innterHTML = ''
+                            restoreList.append('li').html('RESTORE ' + toothName + ' (' + toothID + ')')
+
+                            // Case B: If area is 'blank' for every area'; do not include any area description
+                        } else if (areasToTreat.filter(d => d !== 'blank').length === 0) {
+                            const surfacesToTreat = Object.keys(d.surfaceDetails.restore),
+                                orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1),
+                                joinedSurfaces = (function () {
+                                    let orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1)
+                                    if (orderedSurfacesToTreat[0] === "Mesial" && orderedSurfacesToTreat.length === 2) {
+                                        orderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return orderedSurfacesToTreat.join('-').toLowerCase()
+                                })()
+                            restoreList.append('li').html('RESTORE ' + toothName + ' (' + toothID + ') ' + joinedSurfaces)
+
+                            // Case C. If there are 'blank' and 'specified' areas, 
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0 && areasToTreat.filter(d => d === 'blank').length > 0) {
+                            // I. Create a (combined) "blank"  area sentence
+                            const blankSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter(key => d.surfaceDetails.restore[key] === 'blank')
+                            let blankOrderedSurfacesToTreat = surfaceOrder.filter(d => blankSurfacesToTreat.indexOf(d) > -1),
+                                blankJoinedSurfaces = (function () {
+                                    if (blankOrderedSurfacesToTreat[0] === "Mesial" && blankOrderedSurfacesToTreat.length === 2) {
+                                        blankOrderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return blankOrderedSurfacesToTreat.join('-').toLowerCase()
+                                })(),
+                                blankSentence = 'RESTORE ' + toothName + ' (' + toothID + ') ' + blankJoinedSurfaces
+
+                            restoreList.append('li').html(blankSentence)
+
+                            // II. Get indiviudal surface-areas in ordered array
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter(key => d.surfaceDetails.restore[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'RESTORE ' + toothName + ' (' + toothID + ') ' + stemExpanded
+
+                            restoreList.append('li').html(sentence)
+
+                            // Case D. There are only specified surfaces: add these as individual dot points
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0) {
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter(key => d.surfaceDetails.restore[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'RESTORE ' + toothName + ' (' + toothID + ') ' + stemExpanded
+
+                            restoreList.append('li').html(sentence)
+                        }
+                    }
+
+                    // IV  For assess and manage
+                    if (Object.keys(d.surfaceDetails.assessManage).length > 0) {      // Check for assess and manage
+                        const areasToTreat = Object.values(d.surfaceDetails.assessManage)
+                        // Case A: For whoel of tootch
+                        if (areasToTreat.indexOf('whole') > -1) {
+                            d3.selectAll('#toothParts_' + toothID + ' > *').classed('treatAll', true)
+                            assessManageList.innterHTML = ''
+                            assessManageList.append('li').html('ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ')
+
+                            // Case B: If area is 'blank' for every area'; do not include any area description
+                        } else if (areasToTreat.filter(d => d !== 'blank').length === 0) {
+                            const surfacesToTreat = Object.keys(d.surfaceDetails.assessManage),
+                                orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1),
+                                joinedSurfaces = (function () {
+                                    let orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1)
+                                    if (orderedSurfacesToTreat[0] === "Mesial" && orderedSurfacesToTreat.length === 2) {
+                                        orderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return orderedSurfacesToTreat.join('-').toLowerCase()
+                                })()
+                            assessManageList.append('li').html('ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + joinedSurfaces)
+
+                            // Case C. If there are 'blank' and 'specified' areas, 
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0 && areasToTreat.filter(d => d === 'blank').length > 0) {
+                            // I. Create a (combined) "blank"  area sentence
+                            const blankSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter(key => d.surfaceDetails.assessManage[key] === 'blank')
+                            let blankOrderedSurfacesToTreat = surfaceOrder.filter(d => blankSurfacesToTreat.indexOf(d) > -1),
+                                blankJoinedSurfaces = (function () {
+                                    if (blankOrderedSurfacesToTreat[0] === "Mesial" && blankOrderedSurfacesToTreat.length === 2) {
+                                        blankOrderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return blankOrderedSurfacesToTreat.join('-').toLowerCase()
+                                })(),
+                                blankSentence = 'ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + blankJoinedSurfaces
+
+                            assessManageList.append('li').html(blankSentence)
+
+                            // II. Get indiviudal surface-areas in ordered array
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter(key => d.surfaceDetails.assessManage[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + stemExpanded
+
+                            assessManageList.append('li').html(sentence)
+
+                            // Case D. There are only specified surfaces: add these as individual dot points
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0) {
+                            // Add indiviudal surface-area sentences
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter(key => d.surfaceDetails.assessManage[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + stemExpanded
+
+                            assessManageList.append('li').html(sentence)
+                        }
+                    }
+                })
+            }
+        }
+
+        // Warn the user when leaving the page
+        window.onbeforeunload = () => "Make sure to save your from to PDF before closing this tool."
+
+
+
+    </script>
+</body>
+
+</html>
