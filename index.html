@@ -1,1488 +1,1234 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Riversdale Ortho Teeth Extraction Form Tool">
-        <!-- STYLING-->
-        <style> 
-          /* General styling and typography */
-            body{ 
-            }
-            @font-face {
-              font-family: Dax-Light;
-              src: url(fonts/DaxLight.ttf);
-            }
-            @font-face {
-              font-family: Dax-Bold;
-              src: url(fonts/DaxBold.ttf);
-            }  
-            @font-face {
-              font-family: Dax-Medium;
-              src: url(fonts/DaxMedium.ttf);
-            }              
 
-            .hidden{
-              display: none;
-            }
-            .label, .field, .inline-selector, .textBox, #tooltip, input{
-              display: inline-flex;
-              background: none;
-              font-family: 'Dax-Medium', Helvetica, Arial, 'sans-serif'; 
-              font-size: 10pt;    
-              padding-top: 2mm;
-            }
-            .bold{
-              font-size: 10pt;               
-              font-family: 'Dax-Bold', Helvetica, Arial, 'sans-serif'; 
-              font-weight: bold;
-            }
-            select.inline-selector{
-              font-family: 'Dax-Medium', Helvetica, Arial, 'sans-serif'; 
-              background: none;
-              border: none;
-              -webkit-appearance: none;
-              -moz-appearance: none;
-              text-indent: 1px;
-              text-overflow: '';              
-            }
-            input{
-              border: none;      
-            }
-            textarea{
-              border: none;                   
-            }
-            ul{
-              margin: 0;
-              padding-left: 7mm;
-            }
-            li{
-              margin: 0;
-              padding-bottom: 0.25rem;
-            }
-            #formDateLabel, 
-            #enclosedLabel{
-              width: 20%
-            }
-            #formDate{
-              width: 54%
-            }
-            #title{
-              margin-left: 2.75mm;
-              width: 60%;
-            }
-            .field{
-              /*border-bottom: dashed 0.5px #000;*/
-              width: 50%;
-              margin-left: 1rem;
-              text-align: left;
-            }
-            .textBox.nameEntry{
-              margin-left: 10mm;
-              width: 72mm;
-              text-decoration: underline;
-              height: 16mm;
-            }            
-            .label.name{
-              width: 30%;
-            }
-            .field.name{
-              width: 60%;
-            }      
-            .patient.field.name{
-              font-weight: bold;
-            }                  
-            .textBox{
-              padding: 2mm;
-              line-height: 1.5;
-              height: -webkit-fill-available;
-              width: 92.5%;
-            }
-         #regards{
-            font-family: Dax-Medium;
-            font-size: 10pt;                        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Riversdale Ortho Teeth Extraction Form Tool">
+    <!-- STYLING-->
+    <style>
+        @font-face {
+            font-family: NeusaNext-Light;
+            src: url(fonts/NeusaNextStd-Light.otf);
+        }
+
+        @font-face {
+            font-family:  NeusaNext-Bold;
+            src: url(fonts/NeusaNextStd-Bold.otf);
+        }
+
+        @font-face {
+            font-family: NeusaNext-Thin;
+            src: url(fonts/NeusaNextStd-Thin.otf);
+        }
+
+        /* General styling and typography */
+        .hidden {
+            display: none;
+        }
+
+        .label,
+        .field,
+        .inline-selector,
+        .textBox,
+        #tooltip,
+        input {
+            display: inline-flex;
+            background: none;
+            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
+            font-size: 10pt;
+            padding-top: 2mm;
+        }
+        .bold {
+            font-size: 10pt;
+            font-family: 'NeusaNext-Bold', Helvetica, Arial, 'sans-serif';
+            font-weight: bold;
+        }
+
+        select.inline-selector {
+            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
+            background: none;
+            border: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        }
+
+        input {
+            border: none;
+        }
+
+        textarea {
+            border: none;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 7mm;
+        }
+
+        li {
+            margin: 0;
+            padding-bottom: 0.25rem;
+        }
+
+        #formDateLabel,
+        #enclosedLabel {
+            width: 20%
+        }
+
+        #formDate {
+            width: 54%
+        }
+
+        #title {
+            margin-left: 2.75mm;
+            width: 60%;
+        }
+
+        .field {
+            /*border-bottom: dashed 0.5px #000;*/
+            width: 50%;
+            margin-left: 1rem;
+            text-align: left;
+        }
+
+        .textBox.nameEntry {
+            margin-left: 5mm;
+            width: 60mm;
+            text-decoration: underline;
+            height: 16mm;
+        }
+
+        .label.name {
+            width: 30%;
+        }
+
+        .field.name {
+            width: 60%;
+        }
+
+        .patient.field.name {
+            font-weight: bold;
+        }
+
+        .textBox {
+            padding: 2mm;
+            line-height: 1.5;
+            height: -webkit-fill-available;
+            width: 92.5%;
+        }
+
+        #regards {
+            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
+            font-size: 10pt;
             margin-bottom: 25mm;
             font-weight: normal;
             margin-left: 4mm
-         }
-          /* Layout */
-            #toothExtraction-form{
-              display: grid;
-              grid-template-columns: 10mm 90mm 10mm 90mm 10mm;
-              grid-template-rows: 75mm 23mm 5mm 30mm 35mm 80mm 27mm;
-              grid-template-areas: 
-               ". . . . ."
-              ". attention . date ."
-               ". attention . . ."
-               ". patient   . dia ."
-               ". treatment . dia ."
-               ". treatment . dia ."
-               ". . . dia ."
-            }
-              #bg-letterhead{
-                grid-area: 1 / 1 / 7 / 6;
-                width: 100%;
-              }
-              #attention{
-                grid-area: attention;
-              }
-              #dateAttach{
-                grid-area: date;     
-                padding-left: 5mm;           
-              }
-              #patient{
-                grid-area: patient;
-              }           
-              #treatment{
-                grid-area: treatment;
-                /*height: auto;*/
-              }  
-              #treatmentText{
-                /*border: 0.5px dashed #000;*/
-                height: 80%;
-              }
-              #teethDiagram-container{
-                grid-area: dia;
-              }
-              #attachment{
-                grid-area: attachment;
-              }
-              #enclosedForm{
-                width: 70%;
-                margin-left: 3mm;
-              }
-              #otherLabel{
-                width: 20%;
-              }
-              #otherAttachment{
-                width: 70%;
-                height: 15mm;
-              }
-              #treatmentText .deciduous,
-              #treatmentText .permanent{
-                text-decoration: underline;
-              }
-              #drRO{
-                margin-top: 3mm;
-              }
+        }
 
-          /* SVG Digaram styling*/
-            svg{
-              font-family: 'Dax-Medium', 'Roboto', Helvetica, Arial, 'sans-serif';             
-            }
-            .visGrid{ 
-              stroke: #000;
-              stroke-width: 0.5px;
-              fill: none;
-            }
-            .visLabel{ 
-              font-weight: bold;
-              font-size: 6px;
-              text-anchor: middle;
-            }
-            .visLabel.small{ 
-              font-size: 4px;
-            }            
-            .toothIdLabel{ 
-              font-weight: bold;
-              font-size: 3px;
-              text-anchor: middle;
-              pointer-events: none;
-            }  
-            .toothPart{
-              pointer-events: visible;
-            }                  
-            .toothPath{ 
-              stroke: #000;
-              stroke-width: 0.25px;
-              fill: none;
-             }
-            .toothPath.toothMiddle{ 
-              stroke: none;
-             }           
-            .toothCross{
-              fill: none;
-              pointer-events: none;
-            }
-            .toothCross.extract{
-              fill: red;
-            }
-            .tooth-group{
-              cursor: pointer;
-            }
-            .toothPart.assess{
-              fill: grey;
-            }
-            .toothPart.treat,
-            .toothPart.treatAll{
-              fill: aqua;
-            }      
-            .toothPart.assessManage{
-              fill: lightblue;
-            }                                  
-            .toothPart.restore{
-              fill: blue;
-            }
-            .toothPart.expose{
-              fill: lightgreen;
-            }         
-            .toothPart:hover{
-              fill: fuchsia;
-            }   
-            /* Coloured tooth parts for testing */
-              .toothPart.Mesial.displayColour {
-                fill: #052D97;
-              }
-              .toothPart.Palatial.displayColour{
-                fill: #83DBFA;
-              }           
-              .toothPart.Distal.displayColour{
-                fill: #64B130;
-              }    
-              .toothPart.Labial.displayColour{
-                fill: #FEFE34;
-              }  
-              .toothPart.Lingual.displayColour{
-                fill: #9D9D9D;
-              }             
-              .toothPart.Buccal.displayColour{
-                fill: #64048D;
-              }   
-              .toothPart.Occusal.displayColour{
-                fill: #D60D06;
-              }  
-              .toothPart.Incisal.displayColour{
-                fill: #FA5108;
-              }  
+        /* Layout */
+        #toothExtraction-form {
+            display: grid;
+            grid-template-columns: 20mm 80mm 6mm 94mm 20mm;
+            grid-template-rows: 50mm 23mm 5mm 30mm 35mm 80mm 27mm;
+            grid-template-areas:
+                ". . . . ."
+                ". attention . date ."
+                ". attention . . ."
+                ". patient   . dia ."
+                ". treatment . dia ."
+                ". treatment . dia ."
+                ". . . dia ."
+        }
 
-          /* Tooltip */
-            #tooltip { 
-              display: block;
-              position: absolute;  
-              color: #fff;  
-              width: 370px;               
-              padding: 5px 5px;  
-              margin-bottom: 10mm;     
-              background: #000;  
-              background-opacity: 0.8;  
-              border: 0px;    
-              border-radius: 8px;     
-              z-index: 99;
-            }
-            #tooltip.hidden{
-              display: none;
-            }            
-            #tooltip-container{
-            }
-            #tip-close{
-              position: absolute;
-              top: 5px;
-              right: 5px;
-            }
-            #tip-header{
-              display: grid;
-              grid-template-columns: 20% 70%;
-              grid-template-rows: 50% 50%;
-            }
-            #tip-toothNumber{
-              font-size: 35px;
-              grid-area: 1 / 1 / 2 / 2 ;
-            }
-            #tip-toothTitle{
-              grid-area: 1 / 2 / 2 / 3 ;
-            }   
-            #tip-toothTitle div{
-              display: inline;     
-              font-size: 16px;
-              margin-top: 10px;
-              line-height: 1.1;                      
-            }               
-            #tip-toothSurface{
-              color: aqua;
-            }         
-            #tip-instruction{
-              padding: 5px 5px 10px 5px;
-              font-size: 12px;
-              font-style: italic;
-            }
-            #tip-wholeTooth{
-              text-align: center;
-              font-size: 16px;
-            }
-            #tip-treatment-container{
-              padding: 5px 5px 10px 5px;              
-            }
+        #bg-letterhead {
+            grid-area: 1 / 1 / 7 / 6;
+            width: 100%;
+        }
 
-            .actionType,
-            .treatmentType,
-            .treatmentButton{
-              display: inline-grid;
-              padding: 2px 5px;
-              margin-top: 5px;
-              /*border: 0.5px dashed #fff;*/
-              border-radius: 5px;
-              cursor: pointer;
-            }
-          .treatmentButton{
+        #bg-letterhead img {
+            width: 100%;
+        }
+
+        #attention {
+            grid-area: attention;
+        }
+
+        #dateAttach {
+            grid-area: date;
+            padding-left: 0mm;
+        }
+
+        #patient {
+            grid-area: patient;
+        }
+
+        #treatment {
+            grid-area: treatment;
+            /*height: auto;*/
+        }
+
+        #treatmentText {
+            /*border: 0.5px dashed #000;*/
+            height: 80%;
+        }
+
+        #teethDiagram-container {
+            grid-area: dia;
+        }
+
+        #attachment {
+            grid-area: attachment;
+        }
+
+        .enclosedForm-container {
+            padding-top: 3mm;;
+            display: flex;
+            align-items: center;
+        }
+
+        #enclosedForm {
+            width: 70%;
+            /* margin-left: 3mm; */
+            display: flex;
+            align-items: center;
+        }
+
+        #enclosedForm label {
+            padding: 0 1mm;
+            /* font-size: 9pt; */
+        }
+
+        #otherLabel {
+            width: 20%;
+        }
+
+        #otherAttachment {
+            width: 70%;
+            height: 15mm;
+        }
+
+        #treatmentText .deciduous,
+        #treatmentText .permanent {
+            text-decoration: underline;
+        }
+
+        #drRO {
+            margin-top: 3mm;
+        }
+
+        /* SVG Digaram styling*/
+        svg {
+            font-family: 'NeusaNext-Bold', 'Roboto', Helvetica, Arial, 'sans-serif';
+        }
+
+        .visGrid {
+            stroke: #000;
+            stroke-width: 0.5px;
+            fill: none;
+        }
+
+        .visLabel {
+            font-weight: bold;
+            font-size: 6px;
+            text-anchor: middle;
+        }
+
+        .visLabel.small {
+            font-size: 4px;
+        }
+
+        .toothIdLabel {
+            font-weight: bold;
+            font-size: 3px;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .toothPart {
+            pointer-events: visible;
+        }
+
+        .toothPath {
+            stroke: #000;
+            stroke-width: 0.25px;
+            fill: none;
+        }
+
+        .toothPath.toothMiddle {
+            stroke: none;
+        }
+
+        .toothCross {
+            fill: none;
+            pointer-events: none;
+        }
+
+        .toothCross.extract {
+            fill: red;
+        }
+
+        .tooth-group {
+            cursor: pointer;
+        }
+
+        .toothPart.assess {
+            fill: grey;
+        }
+
+        .toothPart.treat,
+        .toothPart.treatAll {
+            fill: aqua;
+        }
+
+        .toothPart.assessManage {
+            fill: lightblue;
+        }
+
+        .toothPart.restore {
+            fill: blue;
+        }
+
+        .toothPart.expose {
+            fill: lightgreen;
+        }
+
+        .toothPart:hover {
+            fill: fuchsia;
+        }
+
+        /* Coloured tooth parts for testing */
+        .toothPart.Mesial.displayColour {
+            fill: #052D97;
+        }
+
+        .toothPart.Palatial.displayColour {
+            fill: #83DBFA;
+        }
+
+        .toothPart.Distal.displayColour {
+            fill: #64B130;
+        }
+
+        .toothPart.Labial.displayColour {
+            fill: #FEFE34;
+        }
+
+        .toothPart.Lingual.displayColour {
+            fill: #9D9D9D;
+        }
+
+        .toothPart.Buccal.displayColour {
+            fill: #64048D;
+        }
+
+        .toothPart.Occusal.displayColour {
+            fill: #D60D06;
+        }
+
+        .toothPart.Incisal.displayColour {
+            fill: #FA5108;
+        }
+
+        /* Tooltip */
+        #tooltip {
+            display: block;
+            position: absolute;
+            color: #fff;
+            width: 370px;
+            padding: 5px 5px;
+            margin-bottom: 10mm;
+            background: #000;
+            background-opacity: 0.8;
+            border: 0px;
+            border-radius: 8px;
+            z-index: 99;
+        }
+
+        #tooltip.hidden {
+            display: none;
+        }
+
+        #tooltip-container {}
+
+        #tip-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        #tip-header {
+            display: grid;
+            grid-template-columns: 20% 70%;
+            grid-template-rows: 50% 50%;
+        }
+
+        #tip-toothNumber {
+            font-size: 35px;
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        #tip-toothTitle {
+            grid-area: 1 / 2 / 2 / 3;
+        }
+
+        #tip-toothTitle div {
+            display: inline;
+            font-size: 16px;
+            margin-top: 10px;
+            line-height: 1.1;
+        }
+
+        #tip-toothSurface {
+            color: aqua;
+        }
+
+        #tip-instruction {
+            padding: 5px 5px 10px 5px;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        #tip-wholeTooth {
+            text-align: center;
+            font-size: 16px;
+        }
+
+        #tip-treatment-container {
+            padding: 5px 5px 10px 5px;
+        }
+
+        .actionType,
+        .treatmentType,
+        .treatmentButton {
+            display: inline-grid;
+            padding: 2px 5px;
+            margin-top: 5px;
+            /*border: 0.5px dashed #fff;*/
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .treatmentButton {
             width: calc(50% - 15px);
             text-align: center
-          }            
-            .actionType:hover,
-            .treatmentType:hover{
-              background: lightgrey;
-              border: 0.5px solid #fff;  
-              color: #000;                          
-            }
-            .actionType.selected,
-            .treatmentType.selected{
-              background: #fff;
-              color: #000;
-              border: 1px solid #fff;                
-            }
-          .treatmentButton:hover{
-             background: #000;
-              border: 1.5px solid #fff;  
-              color: #fff;    
-          }
-          .treatmentLabel{
-            display: inline-grid;  
+        }
+
+        .actionType:hover,
+        .treatmentType:hover {
+            background: lightgrey;
+            border: 0.5px solid #fff;
+            color: #000;
+        }
+
+        .actionType.selected,
+        .treatmentType.selected {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+        }
+
+        .treatmentButton:hover {
+            background: #000;
+            border: 1.5px solid #fff;
+            color: #fff;
+        }
+
+        .treatmentLabel {
+            display: inline-grid;
             padding-right: 3px;
             width: 20%;
-          }  
-          .treatmentTipHeader{
-            display: inline-grid;  
+        }
+
+        .treatmentTipHeader {
+            display: inline-grid;
             padding-right: 3px;
             padding-bottom: 5px
-          }  
-        </style>
-    </head>
-    <body>
-      <!-- EXTRACTION FORM -->
-      <main id = 'toothExtraction-form'>
-        <!-- LETTERHEAD BACKGROUND -->        
-        <div id  = "bg-letterhead">
-          <svg width="210mm" height="297mm" viewBox="0 0 2481 3508" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:10;">
-            <g transform="matrix(4.16667,0,0,4.16667,0,0)">
-                <text x="326.551px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">A</text>
-                <text x="331.614px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">s</text>
-                <text x="334.949px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">so</text>
-                <text x="342.813px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">c</text>
-                <text x="346.331px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">. P</text>
-                <text x="355.307px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">r</text>
-                <text x="358.026px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">o</text>
-                <text x="362.41px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">f</text>
-                <text x="364.857px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">.</text>
-                <text x="369.249px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">P</text>
-                <text x="373.64px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">aul</text>
-                <text x="386.896px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">M</text>
-                <text x="393.478px" y="57.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">. Schneider</text>
-                <text x="326.551px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">B.</text>
-                <text x="332.444px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">D</text>
-                <text x="336.447px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.Sc (Me</text>
-                <text x="358.392px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">l</text>
-                <text x="360.266px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">b),</text>
-                <text x="370.655px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">L</text>
-                <text x="373.894px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.</text>
-                <text x="375.749px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">D</text>
-                <text x="379.752px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.S (Vic),</text>
-                <text x="404.617px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">M</text>
-                <text x="410.314px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.S (Minnes</text>
-                <text x="441.817px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">o</text>
-                <text x="445.534px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">ta),</text>
-                <text x="458.113px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">C</text>
-                <text x="461.374px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">er</text>
-                <text x="467.513px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">t</text>
-                <text x="470.075px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.Orth (</text>
-                <text x="489.472px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">L</text>
-                <text x="492.355px" y="65.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">ouisiana)</text>
-                <text x="326.551px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">Diplom</text>
-                <text x="348.062px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">at</text>
-                <text x="353.976px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">e</text>
-                <text x="357.629px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">, American Boa</text>
-                <text x="403.465px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">r</text>
-                <text x="405.732px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">d</text>
-                <text x="411.479px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">o</text>
-                <text x="415.195px" y="73.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">f Orthodontics.</text>
-                <text x="461.441px" y="73.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">P</text>
-                <text x="464.948px" y="73.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">ro</text>
-                <text x="470.457px" y="73.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">vider N</text>
-                <text x="490.981px" y="73.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">o</text>
-                <text x="494.647px" y="73.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">: 0587 832K</text>
-                <text x="326.551px" y="89.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">D</text>
-                <text x="331.495px" y="89.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">r</text>
-                <text x="333.774px" y="89.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">. Chris Theodosi</text>
-                <text x="326.551px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">B.</text>
-                <text x="332.444px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">D</text>
-                <text x="336.447px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.Sc Hons (Me</text>
-                <text x="375.147px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">l</text>
-                <text x="377.021px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">b),</text>
-                <text x="387.411px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">L</text>
-                <text x="390.65px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.</text>
-                <text x="392.505px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">D</text>
-                <text x="396.508px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.S (Vic),</text>
-                <text x="421.376px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">M</text>
-                <text x="427.072px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.S.D (</text>
-                <text x="442.881px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">S</text>
-                <text x="446.149px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">t</text>
-                <text x="450.456px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">L</text>
-                <text x="453.339px" y="97.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">ouis)</text>
-                <text x="326.551px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">Diplom</text>
-                <text x="348.062px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">at</text>
-                <text x="353.976px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">e</text>
-                <text x="357.629px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">, American Boa</text>
-                <text x="403.465px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">r</text>
-                <text x="405.732px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">d</text>
-                <text x="411.479px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">o</text>
-                <text x="415.195px" y="105.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">f Orthodontics.</text>
-                <text x="461.441px" y="105.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">P</text>
-                <text x="464.948px" y="105.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">ro</text>
-                <text x="470.457px" y="105.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">vider N</text>
-                <text x="490.981px" y="105.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">o</text>
-                <text x="494.647px" y="105.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">: 0577 564J</text>
-                <text x="326.551px" y="121.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">D</text>
-                <text x="331.495px" y="121.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">r</text>
-                <text x="333.774px" y="121.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">. Alwyn</text>
-                <text x="362.67px" y="121.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">W</text>
-                <text x="369.115px" y="121.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">ong</text>
-                <text x="326.551px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">B.</text>
-                <text x="332.444px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">D</text>
-                <text x="336.447px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.Sc Hons (Me</text>
-                <text x="375.143px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">l</text>
-                <text x="377.017px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">b),</text>
-                <text x="387.405px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">D</text>
-                <text x="391.408px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.</text>
-                <text x="393.263px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">C</text>
-                <text x="396.866px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.D Orth (Me</text>
-                <text x="431.698px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">l</text>
-                <text x="433.572px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">b),</text>
-                <text x="443.96px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">M</text>
-                <text x="449.657px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">.Orth (</text>
-                <text x="469.054px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">R</text>
-                <text x="472.98px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">CS</text>
-                <text x="479.693px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">E</text>
-                <text x="482.78px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">d), MR</text>
-                <text x="502.66px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">A</text>
-                <text x="506.768px" y="129.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">CDS (Orth)</text>
-                <text x="326.551px" y="137.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">Cert. Memb. Australian Orthodontic Board.</text>
-                <text x="455.94px" y="137.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">Provider No: 2489 43AA</text>
+        }
+    </style>
+</head>
 
+<body>
+    <!-- EXTRACTION FORM -->
+    <main id='toothExtraction-form'>
+        <!-- LETTERHEAD BACKGROUND -->
+        <div id="bg-letterhead">
+            <img src="./assets/bg-letterhead.png" />
 
-                <text x="326.551px" y="153.404px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">Prof. Marie Cornelis</text>
-
-                <text x="326.551px" y="161.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">DDS (Louvain), MS Orth (Louvain), PhD (Louvain)</text>
-                <text x="326.551px" y="169.404px" style="font-family:'Dax-Medium';font-size:7px;fill:rgb(35,31,32);">Member of European Board of Orthodontics.</text>
-                <text x="461.999px" y="169.404px" style="font-family:'Dax-Light';font-size:7px;fill:rgb(35,31,32);">Provider No: 6566 921B</text>
-
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,0,0)">
-                <text x="326.551px" y="43.703px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">Ri</text>
-                <text x="333.519px" y="43.703px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">v</text>
-                <text x="337.59px" y="43.703px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">ersdale Orthodo</text>
-                <text x="394.814px" y="43.703px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">n</text>
-                <text x="399.372px" y="43.703px" style="font-family:'Dax-Bold';font-size:8px;fill:rgb(35,31,32);">tics</text>
-                <text x="413.444px" y="43.703px" style="font-family:'Dax-Light';font-size:6px;fill:rgb(35,31,32);">ABN 72 260 154 053</text>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.26667,0,0)">
-                <text x="43.465px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">428 Ri</text>
-                <text x="65.353px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">v</text>
-                <text x="69.295px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">ersdale</text>
-                <text x="96.744px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">R</text>
-                <text x="101.166px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">oad, H</text>
-                <text x="123.351px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">a</text>
-                <text x="127.404px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">wthorn Ea</text>
-                <text x="162.285px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">s</text>
-                <text x="165.563px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">t 3123</text>
-                <text x="192.309px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">T</text>
-                <text x="195.484px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">el: 9805 3000</text>
-                <text x="247.647px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">F</text>
-                <text x="250.949px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">a</text>
-                <text x="255.045px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">x</text>
-                <text x="259.251px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">: 9805 3024 <tspan x="305.012px " y="813.759px ">i</tspan>n</text>
-                <text x="311.526px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">f</text>
-                <text x="314.102px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">o@ri</text>
-                <text x="330.158px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">v</text>
-                <text x="334.1px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">ersdaleorth</text>
-                <text x="373.58px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">o</text>
-                <text x="377.69px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">.</text>
-                <text x="379.81px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">c</text>
-                <text x="382.978px" y="813.759px" style="font-family:'Dax-Medium';font-size:8px;fill:rgb(35,31,32);">om.au</text>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,564.166,287.747)">
-              <path d="M0,32.806C0,34.698 -1.534,36.235 -3.427,36.235C-5.321,36.235 -6.857,34.698 -6.857,32.806L-6.857,5.881C-6.857,3.989 -5.321,2.454 -3.427,2.454C-1.534,2.454 0,3.989 0,5.881L0,32.806ZM-9.277,33.378C-9.277,34.955 -10.556,36.235 -12.134,36.235C-13.711,36.235 -14.992,34.955 -14.992,33.378L-14.992,8.573C-14.992,6.996 -13.711,5.715 -12.134,5.715C-10.556,5.715 -9.277,6.996 -9.277,8.573L-9.277,33.378ZM-17.725,33.949C-17.725,35.212 -18.749,36.235 -20.012,36.235C-21.272,36.235 -22.297,35.212 -22.297,33.949L-22.297,13.499C-22.297,12.233 -21.272,11.212 -20.012,11.212C-18.749,11.212 -17.725,12.233 -17.725,13.499L-17.725,33.949ZM-7.956,-8.498C-21.7,-8.498 -32.838,2.651 -32.838,16.404C-32.838,21.562 -31.271,26.354 -28.587,30.329L-28.587,20.39C-28.587,19.443 -27.82,18.676 -26.874,18.676C-25.927,18.676 -25.159,19.443 -25.159,20.39L-25.159,34.385C-20.69,38.667 -14.633,41.304 -7.956,41.304C-2.109,41.304 3.262,39.281 7.509,35.904C7.022,36.116 6.484,36.235 5.917,36.235C3.708,36.235 1.919,34.444 1.919,32.235L1.919,5.687C1.919,3.479 3.708,1.688 5.917,1.688C8.128,1.688 9.916,3.479 9.916,5.687L9.916,32.235C9.916,32.99 9.703,33.695 9.339,34.298C14.016,29.771 16.928,23.429 16.928,16.404C16.928,2.651 5.787,-8.498 -7.956,-8.498" style="fill:rgb(247,143,30);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,183.16,685.374)">
-                <path d="M0,4.914C-0.569,4.914 -0.923,4.81 -1.18,4.644L-0.965,4.026C-0.798,4.137 -0.528,4.248 -0.166,4.248C0.305,4.248 0.597,3.956 0.597,3.512C0.597,3.151 0.389,2.929 -0.146,2.707C-0.923,2.381 -1.132,1.867 -1.132,1.403C-1.132,0.646 -0.583,0 0.299,0C0.777,0 1.131,0.119 1.346,0.271L1.152,0.812C0.985,0.708 0.722,0.597 0.416,0.597C-0.021,0.597 -0.271,0.868 -0.271,1.291C-0.271,1.708 0.035,1.902 0.451,2.075C1.388,2.471 1.527,2.998 1.527,3.457C1.527,4.303 0.888,4.914 0,4.914" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,203.715,685.374)">
-                <path d="M0,4.914C-1.214,4.914 -1.832,3.783 -1.832,2.457C-1.832,1.16 -1.207,0 0.007,0C0.451,0 0.764,0.104 0.993,0.271L0.798,0.798C0.66,0.715 0.465,0.632 0.181,0.632C-0.639,0.632 -0.916,1.534 -0.916,2.45C-0.916,3.373 -0.604,4.241 0.181,4.241C0.458,4.241 0.618,4.178 0.784,4.075L0.993,4.644C0.771,4.817 0.431,4.914 0,4.914" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,224.473,685.663)">
-                <path d="M0,4.775L0,2.617L-1.506,2.617L-1.506,4.775L-2.388,4.775L-2.388,0L-1.506,0L-1.506,2.033L0,2.033L0,0L0.881,0L0.881,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,247.773,685.663)">
-                <path d="M0,4.775L-1.812,1.694C-1.971,1.423 -2.089,1.159 -2.089,1.159L-2.103,1.159C-2.103,1.159 -2.075,1.43 -2.075,1.715L-2.075,4.775L-2.818,4.775L-2.818,0L-1.985,0L-0.277,2.901C-0.118,3.172 -0.021,3.387 -0.021,3.387L-0.007,3.387C-0.007,3.387 -0.028,3.158 -0.028,2.881L-0.028,0L0.708,0L0.708,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,258.61,685.663)">
-                <path d="M0,4.775L0,0L2.325,0L2.325,0.59L0.881,0.59L0.881,2.033L2.166,2.033L2.166,2.617L0.881,2.617L0.881,4.185L2.325,4.185L2.325,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-121.555,-2238.2)">
-                <rect x="95.291" y="701.728" width="0.888" height="4.775" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,292.665,703.45)">
-                <path d="M0,-3.762C-0.187,-3.762 -0.326,-3.741 -0.451,-3.692L-0.451,-0.104C-0.347,-0.07 -0.174,-0.035 0.014,-0.035C0.833,-0.035 1.152,-0.632 1.152,-1.93C1.152,-3.172 0.798,-3.762 0,-3.762M0.028,0.576C-0.562,0.576 -1.034,0.472 -1.325,0.305L-1.325,-4.067C-1.013,-4.227 -0.569,-4.338 -0.021,-4.338C1.423,-4.338 2.048,-3.346 2.048,-1.916C2.048,-0.493 1.472,0.576 0.028,0.576" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,308.447,685.663)">
-                <path d="M0,4.775L0,0L2.325,0L2.325,0.59L0.881,0.59L0.881,2.033L2.166,2.033L2.166,2.617L0.881,2.617L0.881,4.185L2.325,4.185L2.325,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,330.765,703.446)">
-                <path d="M0,-3.83C-0.187,-3.83 -0.333,-3.796 -0.437,-3.747L-0.437,-1.873C-0.382,-1.852 -0.243,-1.838 -0.111,-1.838C0.569,-1.838 0.902,-2.206 0.902,-2.845C0.902,-3.511 0.646,-3.83 0,-3.83M0.93,0.507L-0.423,-1.658L-0.437,-1.658L-0.437,0.507L-1.305,0.507L-1.305,-4.066C-1.007,-4.219 -0.548,-4.337 0,-4.337C1.187,-4.337 1.763,-3.782 1.763,-2.886C1.763,-2.165 1.242,-1.672 0.486,-1.623L0.486,-1.609L1.908,0.507L0.93,0.507Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,355.828,691.767)">
-                <path d="M0,1.638C-0.451,1.638 -0.819,1.27 -0.819,0.819C-0.819,0.361 -0.451,0 0,0C0.451,0 0.819,0.361 0.819,0.819C0.819,1.27 0.451,1.638 0,1.638" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,375.977,703.102)">
-                <path d="M0,-3.595L0,0.59L-0.881,0.59L-0.881,-3.595L-1.77,-3.595L-1.77,-4.185L0.896,-4.185L0.896,-3.595L0,-3.595Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,396.359,685.663)">
-                <path d="M0,4.775L0,2.617L-1.506,2.617L-1.506,4.775L-2.388,4.775L-2.388,0L-1.506,0L-1.506,2.033L0,2.033L0,0L0.881,0L0.881,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,407.919,685.663)">
-                <path d="M0,4.775L0,0L2.325,0L2.325,0.59L0.881,0.59L0.881,2.033L2.166,2.033L2.166,2.617L0.881,2.617L0.881,4.185L2.325,4.185L2.325,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,431.596,703.418)">
-                <path d="M0,-3.747C-0.736,-3.747 -0.902,-2.796 -0.902,-1.901C-0.902,-1.012 -0.757,-0.069 0,-0.069C0.757,-0.069 0.895,-1.012 0.895,-1.901C0.895,-2.796 0.736,-3.747 0,-3.747M0,0.583C-1.284,0.583 -1.798,-0.513 -1.798,-1.873C-1.798,-3.226 -1.284,-4.33 0,-4.33C1.284,-4.33 1.79,-3.226 1.79,-1.873C1.79,-0.513 1.284,0.583 0,0.583" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,451.831,703.45)">
-                <path d="M0,-3.762C-0.187,-3.762 -0.326,-3.741 -0.451,-3.692L-0.451,-0.104C-0.347,-0.07 -0.173,-0.035 0.014,-0.035C0.833,-0.035 1.152,-0.632 1.152,-1.93C1.152,-3.172 0.798,-3.762 0,-3.762M0.028,0.576C-0.562,0.576 -1.034,0.472 -1.325,0.305L-1.325,-4.067C-1.013,-4.227 -0.569,-4.338 -0.021,-4.338C1.423,-4.338 2.048,-3.346 2.048,-1.916C2.048,-0.493 1.472,0.576 0.028,0.576" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,474.467,703.418)">
-                <path d="M0,-3.747C-0.736,-3.747 -0.902,-2.796 -0.902,-1.901C-0.902,-1.012 -0.757,-0.069 0,-0.069C0.757,-0.069 0.895,-1.012 0.895,-1.901C0.895,-2.796 0.736,-3.747 0,-3.747M0,0.583C-1.284,0.583 -1.798,-0.513 -1.798,-1.873C-1.798,-3.226 -1.284,-4.33 0,-4.33C1.284,-4.33 1.79,-3.226 1.79,-1.873C1.79,-0.513 1.284,0.583 0,0.583" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,493.111,685.374)">
-                <path d="M0,4.914C-0.569,4.914 -0.923,4.81 -1.18,4.644L-0.965,4.026C-0.798,4.137 -0.528,4.248 -0.166,4.248C0.305,4.248 0.597,3.956 0.597,3.512C0.597,3.151 0.389,2.929 -0.146,2.707C-0.923,2.381 -1.131,1.867 -1.131,1.403C-1.131,0.646 -0.583,0 0.299,0C0.778,0 1.132,0.119 1.346,0.271L1.152,0.812C0.985,0.708 0.722,0.597 0.417,0.597C-0.021,0.597 -0.27,0.868 -0.27,1.291C-0.27,1.708 0.035,1.902 0.451,2.075C1.388,2.471 1.527,2.998 1.527,3.457C1.527,4.303 0.888,4.914 0,4.914" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-121.555,-2238.2)">
-                <rect x="150.787" y="701.728" width="0.888" height="4.775" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,528.782,691.767)">
-                <path d="M0,1.638C-0.451,1.638 -0.819,1.27 -0.819,0.819C-0.819,0.361 -0.451,0 0,0C0.451,0 0.819,0.361 0.819,0.819C0.819,1.27 0.451,1.638 0,1.638" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,559.285,685.663)">
-                <path d="M0,4.775L-0.777,4.775L-1.492,1.853C-1.562,1.582 -1.582,1.333 -1.582,1.333L-1.596,1.333C-1.596,1.333 -1.617,1.575 -1.687,1.853L-2.394,4.775L-3.172,4.775L-4.268,0L-3.387,0L-2.797,3.123C-2.748,3.394 -2.713,3.664 -2.713,3.664L-2.699,3.664C-2.699,3.664 -2.665,3.394 -2.603,3.123L-1.881,0L-1.229,0L-0.513,3.123C-0.458,3.38 -0.423,3.664 -0.423,3.664L-0.41,3.664C-0.41,3.664 -0.382,3.38 -0.333,3.123L0.285,0L1.097,0L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,577.321,703.418)">
-                <path d="M0,-3.747C-0.736,-3.747 -0.903,-2.796 -0.903,-1.901C-0.903,-1.012 -0.757,-0.069 0,-0.069C0.757,-0.069 0.895,-1.012 0.895,-1.901C0.895,-2.796 0.735,-3.747 0,-3.747M0,0.583C-1.284,0.583 -1.798,-0.513 -1.798,-1.873C-1.798,-3.226 -1.284,-4.33 0,-4.33C1.284,-4.33 1.79,-3.226 1.79,-1.873C1.79,-0.513 1.284,0.583 0,0.583" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,603.774,685.663)">
-                <path d="M0,4.775L-1.812,1.694C-1.971,1.423 -2.089,1.159 -2.089,1.159L-2.104,1.159C-2.104,1.159 -2.075,1.43 -2.075,1.715L-2.075,4.775L-2.818,4.775L-2.818,0L-1.985,0L-0.278,2.901C-0.118,3.172 -0.021,3.387 -0.021,3.387L-0.007,3.387C-0.007,3.387 -0.028,3.158 -0.028,2.881L-0.028,0L0.708,0L0.708,4.775L0,4.775Z" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,622.648,685.374)">
-                <path d="M0,4.914C-1.277,4.914 -2.082,4.032 -2.082,2.43C-2.082,0.909 -1.214,0 0.021,0C0.562,0 0.944,0.104 1.214,0.264L0.951,0.805C0.798,0.715 0.535,0.625 0.125,0.625C-0.701,0.625 -1.187,1.194 -1.187,2.471C-1.187,3.679 -0.701,4.303 -0.034,4.303C0.222,4.303 0.368,4.254 0.444,4.213L0.444,2.644L-0.243,2.644L-0.243,2.103L1.277,2.103L1.277,4.644C0.979,4.817 0.632,4.914 0,4.914" style="fill:rgb(0,174,239);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,423.596,380.147)">
-                <path d="M-1.634,-1.636C-0.733,-1.636 0,-0.903 0,0C0,0.902 -0.733,1.634 -1.634,1.634C-2.535,1.634 -3.27,0.902 -3.27,0C-3.27,-0.903 -2.535,-1.636 -1.634,-1.636" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,390.768,405.75)">
-                <path d="M-1.554,-1.559C-0.698,-1.559 -0.001,-0.862 -0.001,-0.002C-0.001,0.856 -0.698,1.554 -1.554,1.554C-2.416,1.554 -3.112,0.856 -3.112,-0.002C-3.112,-0.862 -2.416,-1.559 -1.554,-1.559" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,354.498,422.059)">
-                <path d="M-1.475,-1.479C-0.663,-1.479 -0.001,-0.818 -0.001,-0.004C-0.001,0.814 -0.663,1.475 -1.475,1.475C-2.291,1.475 -2.953,0.814 -2.953,-0.004C-2.953,-0.818 -2.291,-1.479 -1.475,-1.479" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,315.559,427.958)">
-                <path d="M-1.397,-1.398C-0.626,-1.398 -0.001,-0.774 -0.001,-0.001C-0.001,0.772 -0.626,1.397 -1.397,1.397C-2.17,1.397 -2.794,0.772 -2.794,-0.001C-2.794,-0.774 -2.17,-1.398 -1.397,-1.398" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,276.628,422.722)">
-                <path d="M-1.319,-1.316C-0.592,-1.316 0,-0.727 0,0C0,0.73 -0.592,1.319 -1.319,1.319C-2.047,1.319 -2.635,0.73 -2.635,0C-2.635,-0.727 -2.047,-1.316 -1.319,-1.316" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,240.339,407.077)">
-                <path d="M-1.235,-1.24C-0.554,-1.24 0.001,-0.687 0.001,-0.004C0.001,0.682 -0.554,1.235 -1.235,1.235C-1.921,1.235 -2.476,0.682 -2.476,-0.004C-2.476,-0.687 -1.921,-1.24 -1.235,-1.24" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,207.532,382.128)">
-                <path d="M-1.158,-1.158C-0.518,-1.158 0,-0.641 0,0.001C0,0.64 -0.518,1.158 -1.158,1.158C-1.798,1.158 -2.317,0.64 -2.317,0.001C-2.317,-0.641 -1.798,-1.158 -1.158,-1.158" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,4.16667,4.16667,0,178.942,348.983)">
-                <path d="M1.079,-1.079C1.675,-1.079 2.158,-0.598 2.158,-0.002C2.158,0.595 1.675,1.079 1.079,1.079C0.483,1.079 0,0.595 0,-0.002C0,-0.598 0.483,-1.079 1.079,-1.079" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,588.822,256.516)">
-                <path d="M-3.998,-3.999C-6.208,-3.999 -7.998,-2.21 -7.998,0C-7.998,2.208 -6.208,3.998 -3.998,3.998C-1.791,3.998 0.001,2.208 0.001,0C0.001,-2.21 -1.791,-3.999 -3.998,-3.999" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,549.87,264.467)">
-                <path d="M-3.426,-3.431C-5.32,-3.431 -6.856,-1.898 -6.856,-0.003C-6.856,1.889 -5.32,3.426 -3.426,3.426C-1.535,3.426 0,1.889 0,-0.003C0,-1.898 -1.535,-3.431 -3.426,-3.431" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,513.613,282.813)">
-                <path d="M-2.859,-2.856C-4.436,-2.856 -5.714,-1.577 -5.714,0.001C-5.714,1.578 -4.436,2.859 -2.859,2.859C-1.28,2.859 -0.001,1.578 -0.001,0.001C-0.001,-1.577 -1.28,-2.856 -2.859,-2.856" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,480.788,310.472)">
-                <path d="M-2.286,-2.286C-3.55,-2.286 -4.572,-1.263 -4.572,0.002C-4.572,1.261 -3.55,2.286 -2.286,2.286C-1.024,2.286 0,1.261 0,0.002C0,-1.263 -1.024,-2.286 -2.286,-2.286" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,-4.16667,-4.16667,0,452.196,346.339)">
-                <path d="M-1.714,-1.714C-2.661,-1.714 -3.428,-0.947 -3.428,0.001C-3.428,0.948 -2.661,1.714 -1.714,1.714C-0.767,1.714 0.001,0.948 0.001,0.001C0.001,-0.947 -0.767,-1.714 -1.714,-1.714" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,4.16667,4.16667,0,627.78,264.469)">
-                <path d="M3.425,-3.43C5.319,-3.43 6.856,-1.897 6.856,-0.003C6.856,1.889 5.319,3.425 3.425,3.425C1.535,3.425 -0.001,1.889 -0.001,-0.003C-0.001,-1.897 1.535,-3.43 3.425,-3.43" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,4.16667,4.16667,0,664.03,282.813)">
-                <path d="M2.859,-2.856C4.436,-2.856 5.714,-1.576 5.714,0.004C5.714,1.58 4.436,2.859 2.859,2.859C1.28,2.859 0.001,1.58 0.001,0.004C0.001,-1.576 1.28,-2.856 2.859,-2.856" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,4.16667,4.16667,0,696.855,310.472)">
-                <path d="M2.286,-2.286C3.55,-2.286 4.572,-1.263 4.572,0.002C4.572,1.263 3.55,2.286 2.286,2.286C1.024,2.286 0,1.263 0,0.002C0,-1.263 1.024,-2.286 2.286,-2.286" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(0,4.16667,4.16667,0,725.454,346.335)">
-                <path d="M1.714,-1.714C2.662,-1.714 3.43,-0.948 3.43,0C3.43,0.948 2.662,1.714 1.714,1.714C0.767,1.714 0,0.948 0,0C0,-0.948 0.767,-1.714 1.714,-1.714" style="fill:rgb(0,174,239);"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,200.905,570.971)">
-                <path d="M0,-15.166C-0.742,-15.166 -1.319,-15.028 -1.731,-14.836L-1.731,-7.418C-1.511,-7.335 -0.962,-7.28 -0.44,-7.28C2.253,-7.28 3.572,-8.737 3.572,-11.265C3.572,-13.902 2.555,-15.166 0,-15.166M3.682,2.006L-1.676,-6.566L-1.731,-6.566L-1.731,2.006L-5.166,2.006L-5.166,-16.1C-3.984,-16.705 -2.171,-17.172 0,-17.172C4.698,-17.172 6.979,-14.974 6.979,-11.429C6.979,-8.572 4.918,-6.621 1.923,-6.429L1.923,-6.374L7.556,2.006L3.682,2.006Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-121.555,-2556.98)">
-                <path d="M86.843,737.904L90.195,737.904L90.195,752.713L86.843,752.713L86.843,737.904ZM88.519,735.349C87.502,735.349 86.678,734.607 86.678,733.7C86.678,732.766 87.502,732.024 88.519,732.024C89.563,732.024 90.36,732.766 90.36,733.7C90.36,734.607 89.563,735.349 88.519,735.349" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,294.555,517.626)">
-                <path d="M0,14.809L-3.187,14.809L-8.023,0L-4.451,0L-1.841,9.561C-1.539,10.633 -1.484,11.594 -1.484,11.594L-1.429,11.594C-1.429,11.594 -1.346,10.66 -1.044,9.561L1.621,0L4.753,0L0,14.809Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,341.839,571.891)">
-                <path d="M0,-11.238C-1.951,-11.238 -3.297,-9.644 -3.215,-6.1L2.912,-7.034C2.912,-10.029 1.841,-11.238 0,-11.238M-3.022,-4.397C-2.747,-1.649 -1.429,-0.275 1.017,-0.275C2.72,-0.275 3.956,-0.687 4.753,-1.1L5.55,1.016C4.506,1.593 2.912,2.06 0.66,2.06C-3.544,2.06 -6.21,-0.66 -6.21,-5.661C-6.21,-10.496 -3.764,-13.298 0.11,-13.298C4.039,-13.298 6.182,-10.689 6.045,-5.715L-3.022,-4.397Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,401.029,568.683)">
-                <path d="M0,-10.056C-1.127,-10.441 -2.363,-10.386 -3.132,-9.946L-3.132,2.555L-6.484,2.555L-6.484,-11.457C-4.946,-12.199 -3.077,-12.611 0.66,-12.501L0,-10.056Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,422.781,516.482)">
-                <path d="M0,15.331C-1.731,15.331 -3.214,14.864 -4.094,14.26L-3.214,12.116C-2.665,12.556 -1.649,12.968 -0.44,12.968C0.934,12.968 1.841,12.089 1.841,10.88C1.841,9.616 1.181,9.012 -0.33,8.435C-3.132,7.363 -3.709,5.824 -3.709,4.286C-3.709,1.923 -1.841,0 0.989,0C2.638,0 3.874,0.412 4.836,1.043L4.012,2.995C3.572,2.637 2.693,2.17 1.649,2.17C0.275,2.17 -0.467,3.077 -0.467,4.121C-0.467,5.33 0.44,5.934 1.731,6.456C4.616,7.61 5.275,9.094 5.275,10.825C5.275,13.243 3.242,15.331 0,15.331" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,483.002,544.182)">
-                <path d="M0,-4.423C-0.467,-4.561 -0.962,-4.615 -1.484,-4.615C-4.396,-4.615 -5.385,-2.115 -5.385,1.017C-5.385,4.369 -4.314,6.567 -1.731,6.567C-0.934,6.567 -0.385,6.485 0,6.238L0,-4.423ZM-1.814,8.71C-6.182,8.71 -8.71,5.908 -8.71,1.21C-8.71,-3.626 -6.072,-6.511 -2.225,-6.511C-1.401,-6.511 -0.66,-6.429 0,-6.237L0,-13.133L3.352,-13.133L3.352,7.639C2.171,8.298 0.495,8.71 -1.814,8.71" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,539.902,551.396)">
-                <path d="M0,-1.401C-3.16,-1.016 -5.11,-0.33 -5.11,2.363C-5.11,4.287 -3.956,5.111 -2.006,5.111C-1.236,5.111 -0.495,4.946 0,4.698L0,-1.401ZM-2.225,6.979C-6.264,6.979 -8.27,5.331 -8.27,2.473C-8.27,-1.428 -4.506,-2.555 0,-2.995L0,-3.791C0,-5.715 -1.209,-6.237 -2.94,-6.237C-4.369,-6.237 -5.742,-5.77 -6.649,-5.33L-7.418,-7.254C-6.457,-7.72 -4.671,-8.38 -2.336,-8.38C0.714,-8.38 3.132,-7.089 3.132,-3.269L3.132,5.907C1.951,6.539 0.082,6.979 -2.225,6.979" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-121.555,-2560.64)">
-                <rect x="164.218" y="732.024" width="3.352" height="21.568" style="fill:rgb(35,31,32);"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,609.969,571.891)">
-                <path d="M0,-11.238C-1.951,-11.238 -3.297,-9.644 -3.215,-6.1L2.912,-7.034C2.912,-10.029 1.841,-11.238 0,-11.238M-3.022,-4.397C-2.747,-1.649 -1.429,-0.275 1.017,-0.275C2.72,-0.275 3.956,-0.687 4.753,-1.1L5.55,1.016C4.506,1.593 2.912,2.06 0.66,2.06C-3.544,2.06 -6.21,-0.66 -6.21,-5.661C-6.21,-10.496 -3.764,-13.298 0.11,-13.298C4.039,-13.298 6.182,-10.689 6.045,-5.715L-3.022,-4.397Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,199.085,656.55)">
-                <path d="M0,-11.808C-2.318,-11.808 -2.842,-8.812 -2.842,-5.991C-2.842,-3.193 -2.383,-0.219 0,-0.219C2.383,-0.219 2.821,-3.193 2.821,-5.991C2.821,-8.812 2.318,-11.808 0,-11.808M0,1.836C-4.045,1.836 -5.663,-1.619 -5.663,-5.904C-5.663,-10.168 -4.045,-13.644 0,-13.644C4.045,-13.644 5.641,-10.168 5.641,-5.904C5.641,-1.619 4.045,1.836 0,1.836" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,250.009,654.814)">
-                <path d="M0,-8.002C-0.896,-8.308 -1.88,-8.265 -2.493,-7.914L-2.493,2.034L-5.16,2.034L-5.16,-9.117C-3.936,-9.708 -2.449,-10.036 0.525,-9.948L0,-8.002Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,273.148,600.244)">
-                <path d="M0,15.262C-2.318,15.262 -3.236,13.709 -3.236,12.07L-3.236,5.051L-4.548,5.051L-4.548,3.346L-3.236,3.346L-3.236,0.744L-0.569,0L-0.569,3.346L1.356,3.346L1.356,5.051L-0.569,5.051L-0.569,11.939C-0.569,12.857 -0.197,13.469 0.721,13.469C0.962,13.469 1.137,13.425 1.356,13.36L1.356,15.021C1.115,15.131 0.634,15.262 0,15.262" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,313.05,591.772)">
-                <path d="M0,17.164L0,8.877C0,7.827 -0.481,6.888 -2.077,6.888C-2.799,6.888 -3.367,7.019 -3.958,7.369L-3.958,17.164L-6.625,17.164L-6.625,0L-3.958,0L-3.958,5.882C-3.061,5.445 -2.23,5.248 -1.334,5.248C1.64,5.248 2.667,6.997 2.667,8.812L2.667,17.164L0,17.164Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,350.126,657.184)">
-                <path d="M0,-8.855C-1.88,-8.855 -2.252,-6.69 -2.252,-4.438C-2.252,-2.208 -1.837,-0.131 0,-0.131C1.902,-0.131 2.252,-2.208 2.252,-4.438C2.252,-6.69 1.902,-8.855 0,-8.855M0,1.684C-3.302,1.684 -4.898,-0.94 -4.898,-4.417C-4.898,-7.936 -3.302,-10.539 0,-10.539C3.323,-10.539 4.898,-7.936 4.898,-4.417C4.898,-0.94 3.302,1.684 0,1.684" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,404.969,635.319)">
-                <path d="M0,-3.52C-0.372,-3.629 -0.765,-3.673 -1.181,-3.673C-3.499,-3.673 -4.286,-1.683 -4.286,0.809C-4.286,3.477 -3.433,5.226 -1.377,5.226C-0.743,5.226 -0.306,5.16 0,4.964L0,-3.52ZM-1.443,6.931C-4.92,6.931 -6.931,4.701 -6.931,0.962C-6.931,-2.886 -4.832,-5.182 -1.771,-5.182C-1.115,-5.182 -0.525,-5.116 0,-4.963L0,-10.451L2.668,-10.451L2.668,6.079C1.727,6.603 0.394,6.931 -1.443,6.931" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,443.868,657.184)">
-                <path d="M0,-8.855C-1.881,-8.855 -2.252,-6.69 -2.252,-4.438C-2.252,-2.208 -1.837,-0.131 0,-0.131C1.902,-0.131 2.252,-2.208 2.252,-4.438C2.252,-6.69 1.902,-8.855 0,-8.855M0,1.684C-3.302,1.684 -4.897,-0.94 -4.897,-4.417C-4.897,-7.936 -3.302,-10.539 0,-10.539C3.323,-10.539 4.897,-7.936 4.897,-4.417C4.897,-0.94 3.302,1.684 0,1.684" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,499.257,613.272)">
-                <path d="M0,12.004L0,3.652C0,2.689 -0.437,1.684 -2.121,1.684C-2.995,1.684 -3.455,1.815 -3.958,2.012L-3.958,12.004L-6.625,12.004L-6.625,0.853C-5.51,0.328 -4.001,0 -2.011,0C1.508,0 2.668,1.706 2.668,3.608L2.668,12.004L0,12.004Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,534.056,600.244)">
-                <path d="M0,15.262C-2.318,15.262 -3.236,13.709 -3.236,12.07L-3.236,5.051L-4.548,5.051L-4.548,3.346L-3.236,3.346L-3.236,0.744L-0.569,0L-0.569,3.346L1.356,3.346L1.356,5.051L-0.569,5.051L-0.569,11.939C-0.569,12.857 -0.197,13.469 0.722,13.469C0.962,13.469 1.137,13.425 1.356,13.36L1.356,15.021C1.115,15.131 0.634,15.262 0,15.262" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-121.555,-2371.45)">
-                <path d="M160.385,716.553L163.052,716.553L163.052,728.338L160.385,728.338L160.385,716.553ZM161.719,714.52C160.91,714.52 160.254,713.929 160.254,713.208C160.254,712.465 160.91,711.874 161.719,711.874C162.55,711.874 163.184,712.465 163.184,713.208C163.184,713.929 162.55,714.52 161.719,714.52" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,583.158,613.275)">
-                <path d="M0,12.222C-2.69,12.222 -4.657,9.97 -4.657,6.078C-4.657,2.165 -2.602,0 0.022,0C1.465,0 2.318,0.437 2.755,0.809L2.187,2.317C1.858,2.055 1.377,1.814 0.612,1.814C-1.202,1.814 -1.968,3.454 -1.968,6.034C-1.968,8.636 -1.071,10.298 0.569,10.298C1.29,10.298 1.793,10.079 2.164,9.773L2.777,11.413C2.296,11.85 1.421,12.222 0,12.222" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,611.397,613.274)">
-                <path d="M0,12.2C-1.377,12.2 -2.558,11.828 -3.257,11.347L-2.558,9.642C-2.121,9.992 -1.311,10.32 -0.35,10.32C0.744,10.32 1.465,9.62 1.465,8.658C1.465,7.652 0.94,7.171 -0.262,6.712C-2.492,5.859 -2.951,4.635 -2.951,3.411C-2.951,1.53 -1.465,0 0.788,0C2.099,0 3.084,0.327 3.849,0.83L3.193,2.383C2.843,2.099 2.143,1.727 1.312,1.727C0.219,1.727 -0.372,2.448 -0.372,3.28C-0.372,4.241 0.35,4.722 1.377,5.138C3.673,6.056 4.198,7.237 4.198,8.614C4.198,10.539 2.581,12.2 0,12.2" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,0,0)">
-                <clipPath id="_clip1">
-                    <rect x="410.073" y="759.213" width="199.376" height="96.85" clip-rule="nonzero"/>
-                </clipPath>
-                <g clip-path="url(#_clip1)">
-                    <g transform="matrix(0,-1,-1,0,591.279,759.212)">
-                        <path d="M-21.004,-21.004C-32.6,-21.004 -42.008,-11.6 -42.008,0C-42.008,11.596 -32.6,21.004 -21.004,21.004C-9.408,21.004 0,11.596 0,0C0,-11.6 -9.408,-21.004 -21.004,-21.004" style="fill:rgb(0,174,239);"/>
-                    </g>
-                    <g transform="matrix(0,-1,-1,0,542.19,769.236)">
-                        <path d="M-18,-18.004C-27.944,-18.004 -36.008,-9.948 -36.008,-0.004C-36.008,9.936 -27.944,18 -18,18C-8.064,18 0.004,9.936 0.004,-0.004C0.004,-9.948 -8.064,-18.004 -18,-18.004" style="fill:rgb(0,174,239);"/>
-                    </g>
-                    <g transform="matrix(0,-1,-1,0,496.485,792.367)">
-                        <path d="M-15.006,-15.002C-23.29,-15.002 -30.006,-8.282 -30.006,0.006C-30.006,8.29 -23.29,15.006 -15.006,15.006C-6.722,15.006 -0.002,8.29 -0.002,0.006C-0.002,-8.282 -6.722,-15.002 -15.006,-15.002" style="fill:rgb(0,174,239);"/>
-                    </g>
-                    <g transform="matrix(0,-1,-1,0,455.116,827.228)">
-                        <path d="M-12.004,-12.008C-18.636,-12.008 -24.008,-6.628 -24.008,0.004C-24.008,6.628 -18.636,12.004 -12.004,12.004C-5.38,12.004 -0.004,6.628 -0.004,0.004C-0.004,-6.628 -5.38,-12.008 -12.004,-12.008" style="fill:rgb(0,174,239);"/>
-                    </g>
-                </g>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-59.055,3507.88)">
-                <path d="M0,-841.89L-15,-841.89M623.622,-841.89L638.622,-841.89M0,0L-15,0M623.622,0L638.622,0M14.173,-856.063L14.173,-871.063M14.173,14.173L14.173,29.173M609.449,-856.063L609.449,-871.063M609.449,14.173L609.449,29.173" style="fill:none;fill-rule:nonzero;stroke:white;stroke-width:1.25px;"/>
-            </g>
-            <g transform="matrix(4.16667,0,0,4.16667,-59.055,3507.88)">
-                <path d="M0,-841.89L-15,-841.89M623.622,-841.89L638.622,-841.89M0,0L-15,0M623.622,0L638.622,0M14.173,-856.063L14.173,-871.063M14.173,14.173L14.173,29.173M609.449,-856.063L609.449,-871.063M609.449,14.173L609.449,29.173" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:0.25px;"/>
-            </g>
-          </svg>
         </div>
-          
+
         <!-- DATE AND ATTENTION PRACTITIONER FIELDS -->
-        <div id = "attention">
-          <div class = 'label bold'>Attention:</div>
-          <div id = "practitioner" class = 'nameEntry textBox'></div>
+        <div id="attention">
+            <div class='label bold'>Attention:</div>
+            <div id="practitioner" class='nameEntry textBox'></div>
         </div>
         <!-- DATE AND ATTACHMENT FIELDS -->
-        <div id = "dateAttach">
-          <div id = "formDateLabel" class = 'label bold'>Date:</div><input id = "formDate" type="date" class = 'field'></input>
-          <div><div id = "enclosedLabel"class = 'label bold'>Enclosed:</div>
-          <form id = "enclosedForm" class = 'inline-selector field'>
-            <input type="checkbox" name="" value="">
-            <label for=""> OPG </label><br>
-            <input type="checkbox" name="" value="">
-            <label for="">CBCT images</label><br>
-            <input type="checkbox" name="" value="" >
-            <label for="">Photo marking relevant teeth</label>
-          </form></div>
-          <div id = "otherLabel" class = 'label bold'></div><div id = "otherAttachment" class = 'field name'></div>
+        <div id="dateAttach">
+            <div id="formDateLabel" class='label bold'>Date:</div>
+            <input id="formDate" type="date" class='field'></input>
+            <div class='enclosedForm-container'>
+                <div id="enclosedLabel" class='label bold'>Enclosed:</div>
+                <form id="enclosedForm" class='inline-selector field'>
+                    <input type="checkbox" name="" value="">
+                    <label for=""> OPG </label><br>
+                    <input type="checkbox" name="" value="">
+                    <label for="">CBCT images</label><br>
+                    <input type="checkbox" name="" value="">
+                    <label for="">Photo marking relevant teeth</label>
+                </form>
+            </div>
+
+        </div>
+        <div id="otherLabel" class='label bold'></div>
+        <div id="otherAttachment" class='field name'></div>
         </div>
         <!-- PATIENT INFORMATION FIELDS -->
-        <div id = "patient" >
-          <div>
-            <div class = 'label bold'>Patient information:</div>
-          </div>
-          <div id = "patientInfo" class = 'nameEntry'>            
+        <div id="patient">
             <div>
-              <div class = 'label name'>First name:</div><input id = "patientFirstName" class = 'patient field name' oninput="methods.updateTreatmentName()"></input>
+                <div class='label bold'>Patient information:</div>
             </div>
-            <div>
-              <div class = 'label name'>Last name:</div><input id = "patientLastName"  class = 'patient field name'></input>
+            <div id="patientInfo" class='nameEntry'>
+                <div>
+                    <div class='label name'>First name:</div><input id="patientFirstName" class='patient field name'
+                        oninput="methods.updateTreatmentName()"></input>
+                </div>
+                <div>
+                    <div class='label name'>Last name:</div><input id="patientLastName"
+                        class='patient field name'></input>
+                </div>
+                <div>
+                    <div class='label name'>Date of birth:</div><input id="patientDoB"
+                        class='patient field name'></input>
+                </div>
             </div>
-            <div>
-              <div class = 'label name'>Date of birth:</div><input id = "patientDoB"  class = 'patient field name'></input>
-            </div>
-          </div>
         </div>
 
         <!-- TREATMENT INFORMATION FIELDS -->
-        <div id = "treatment">
-          <div id = "treatmentString" class = "bold">Please provide the following treatment:</div>
-          <br>
-          <div id = "treatmentText" class = "textBox"></div>
-          <div id = "regards">Kind regards,</div>
-            <select id = "drRO" class = 'inline-selector field'>
-              <option selected="selected" disabled>-- Select practioner --</option>
-              <option>PAUL SCHNEIDER</option>
-              <option>CHRIS THEODOSI</option>
-              <option>ALWYN WONG</option>
-              <option>MARIE CORNELIS</option>
+        <div id="treatment">
+            <div id="treatmentString" class="bold">Please provide the following treatment:</div>
+            <br>
+            <div id="treatmentText" class="textBox"></div>
+            <div id="regards">Kind regards,</div>
+            <select id="drRO" class='inline-selector field'>
+                <option selected="selected" disabled>-- Select practioner --</option>
+                <option>PAUL SCHNEIDER</option>
+                <option>CHRIS THEODOSI</option>
+                <option>ALWYN WONG</option>
+                <option>MARIE CORNELIS</option>
+                <option>MATTHEW KEI</option>
             </select>
         </div>
 
         <!-- TOOTH DIAGRAM -->
-        <div id = "teethDiagram-container">
-          <svg id = "teethDiagram" width = "100%" height = "100%" viewBox="-1.5 -115 3 168" >
-            <g transform = "translate(0, -30)">
-              <!-- Diagram background elements -->
-              <g id = "teethVis-background">
-                <path id="grid_yAxis" class = "visGrid" fill="none"  d="M0-60v122.5" />                  
-                <path id="gridH_xAxis" class = "visGrid" fill="none"  d="M40 0h-80"/>                  
-                <text id="label_UPPER" class="visLabel"  x="0" y="-70">UPPER</text>
-                <text id="label_LOWER" class="visLabel"  x="0" y="75">LOWER</text>
-                <text id="label_LA_upper" class="visLabel small">
-                  <tspan  x="0" y="-63">Labial</tspan>
-                </text>
-                <text id="label_LA_lower" class="visLabel small">
-                  <tspan  x="0" y="67.5">Labial</tspan>
-                </text>
-                <rect  x="-10" y="-20" width="30" height = "8" fill = "#fff"></rect>
-                <text id="label_LI_upper" class="visLabel small">
-                  <tspan  x="0" y="-15">Lingual</tspan>
-                </text>
-                <rect  x="-10" y="11" width="30" height = "8" fill = "#fff"></rect>                
-                <text id="label_LI_upper" class="visLabel small">
-                  <tspan  x="0" y="16.25">Lingual</tspan>
-                </text>
-              </g>
-              <!-- Teeth by chldren and adults -->
-              <g id = "deciduousTeeth-group"></g>
-              <g id = "permanentTeeth-group"></g>
-            </g>
-          </svg>
+        <div id="teethDiagram-container">
+            <svg id="teethDiagram" width="100%" height="100%" viewBox="-1.5 -115 3 168">
+                <g transform="translate(0, -30)">
+                    <!-- Diagram background elements -->
+                    <g id="teethVis-background">
+                        <path id="grid_yAxis" class="visGrid" fill="none" d="M0-60v122.5" />
+                        <path id="gridH_xAxis" class="visGrid" fill="none" d="M40 0h-80" />
+                        <text id="label_UPPER" class="visLabel" x="0" y="-70">UPPER</text>
+                        <text id="label_LOWER" class="visLabel" x="0" y="75">LOWER</text>
+                        <text id="label_LA_upper" class="visLabel small">
+                            <tspan x="0" y="-63">Labial</tspan>
+                        </text>
+                        <text id="label_LA_lower" class="visLabel small">
+                            <tspan x="0" y="67.5">Labial</tspan>
+                        </text>
+                        <rect x="-10" y="-20" width="30" height="8" fill="#fff"></rect>
+                        <text id="label_LI_upper" class="visLabel small">
+                            <tspan x="0" y="-15">Lingual</tspan>
+                        </text>
+                        <rect x="-10" y="11" width="30" height="8" fill="#fff"></rect>
+                        <text id="label_LI_upper" class="visLabel small">
+                            <tspan x="0" y="16.25">Lingual</tspan>
+                        </text>
+                    </g>
+                    <!-- Teeth by chldren and adults -->
+                    <g id="deciduousTeeth-group"></g>
+                    <g id="permanentTeeth-group"></g>
+                </g>
+            </svg>
         </div>
-      </main>
+    </main>
 
-      <!-- TOOLTIP -->
-      <div id = "tooltip" class = "hidden"> 
-        <div id = "tooltip-container">
-          <div id = "tip-header">
-            <div id = "tip-toothNumber"></div>
-            <div id = "tip-toothTitle">
-              <div id = "tip-toothName"></div> - <div id = "tip-toothSurface"></div>
+    <!-- TOOLTIP -->
+    <div id="tooltip" class="hidden">
+        <div id="tooltip-container">
+            <div id="tip-header">
+                <div id="tip-toothNumber"></div>
+                <div id="tip-toothTitle">
+                    <div id="tip-toothName"></div> - <div id="tip-toothSurface"></div>
+                </div>
             </div>
-          </div>
-          <div id = "tip-instruction"></div>
-          <div id = "tip-wholeTooth" class = "bold"></div>
-          <div id = "tip-treatment-container">
-            <div class = "treatmentTipHeader bold">Treatment options:</div>
-            <div id = "tip-treatment">
-                <div class = "treatmentLabel bold">Action:</div>
-                <div id = "restore"       class = "treatmentType">Restore</div>
-                <div id = "assessManage"  class = "treatmentType">Assess and manage</div>
+            <div id="tip-instruction"></div>
+            <div id="tip-wholeTooth" class="bold"></div>
+            <div id="tip-treatment-container">
+                <div class="treatmentTipHeader bold">Treatment options:</div>
+                <div id="tip-treatment">
+                    <div class="treatmentLabel bold">Action:</div>
+                    <div id="restore" class="treatmentType">Restore</div>
+                    <div id="assessManage" class="treatmentType">Assess and manage</div>
+                </div>
+                <div id="tip-treatmentType">
+                    <div class="treatmentLabel bold">Area:</div>
+                    <div id="pit" class="actionType">Pit</div>
+                    <div id="fissure" class="actionType">Fissure</div>
+                    <div id="groove" class="actionType">Groove</div>
+                    <div id="blank" class="actionType">Blank</div>
+                    <br>
+                    <div class="treatmentLabel bold"></div>
+                    <div id="whole" class="actionType">Select the whole tooth</div>
+                </div>
             </div>
-            <div id = "tip-treatmentType">
-                <div class = "treatmentLabel bold">Area:</div>
-                <div id = "pit" class = "actionType">Pit</div>
-                <div id = "fissure" class = "actionType">Fissure</div>
-                <div id = "groove" class = "actionType">Groove</div>
-                <div id = "blank" class = "actionType">Blank</div>
-                <br>
-                <div class = "treatmentLabel bold"></div>
-                <div id = "whole" class = "actionType">Select the whole tooth</div>
+            <hr>
+            <div id="tip-options">
+                <div id="removeSurfaceTreatment" class="treatmentButton">Remove or cancel</div>
+                <div id="confirmSurfaceTreatment" class="treatmentButton">Add to request</div>
             </div>
-          </div>
-          <hr>        
-          <div id = "tip-options">
-              <div id = "removeSurfaceTreatment"  class = "treatmentButton">Remove or cancel</div>      
-              <div id = "confirmSurfaceTreatment"  class = "treatmentButton">Add to request</div>      
-          </div>
         </div>
-      </div>
+    </div>
 
-      <!-- JavaScript Libraries -->
-      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>         -->
-      <script src="https://d3js.org/d3.v5.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js" integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- JavaScript Libraries -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>         -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"
+        integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-      <!-- Extraction form tool script -->
-      <script>
-          const data = {}, action = {}
-          let tooltipDiv
+    <!-- Extraction form tool script -->
+    <script>
+        const data = {}, action = {}
+        let tooltipDiv
 
-          // Build from GSheet data
-          Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRHiov9jIvgvn3uOTBz3xvRrN4lmwsp8bI-O9Jcj-DZDmr4aSuPIVbhEfaRH0B-_q68Lv3ySbaKUcJA/pub?gid=0&single=true&output=tsv',
+        // Build from GSheet data
+        Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRHiov9jIvgvn3uOTBz3xvRrN4lmwsp8bI-O9Jcj-DZDmr4aSuPIVbhEfaRH0B-_q68Lv3ySbaKUcJA/pub?gid=0&single=true&output=tsv',
             {
-              delimiter: '\t',
-              download: true,
-              header: true,
-              complete: (d) => {
-                data.byId = {}
-                data.reportOrder = []
+                delimiter: '\t',
+                download: true,
+                header: true,
+                complete: (d) => {
+                    data.byId = {}
+                    data.reportOrder = []
 
-                d.data.forEach( obj => {
-                  obj.toothID = +obj.toothID
-                  obj.rotation = +obj.rotation
-                  obj.xPos = +obj.xPos
-                  obj.yPos = +obj.yPos
-                  obj.reportOrder = +obj.reportOrder
-                  action[obj.toothID] = {
-                    extract:    false,
-                    expose:     false,
-                    surface:    {
-                      [obj.name_Q1]:      {},
-                      [obj.name_Q2]:      {},
-                      [obj.name_Q3]:      {},
-                      [obj.name_Q4]:      {},
-                      [obj.name_middle]:  {}
-                    }
-                  }
-                  data.byId[obj.toothID] =  {
-                    name: obj.toothName,
-                    type: obj.type,
-                    Q1: obj.name_Q1,
-                    Q2: obj.name_Q2,
-                    Q3: obj.name_Q3,
-                    Q4: obj.name_Q4,
-                    middle: obj.name_middle
-                  }
-                  data.reportOrder.push(obj.reportOrder)            // List the tooth reporting order
-                }) 
-                
-                d3.selectAll('.field, .textBox').attr('contenteditable', true)       // Setup editable fields        
-                data.allToothData = d.data                      // Store data  
-                renderForm(data.allToothData)     
-              }
-          })
-                          
-    
-          // Function to render form
-          function renderForm(toothData){
+                    d.data.forEach(obj => {
+                        obj.toothID = +obj.toothID
+                        obj.rotation = +obj.rotation
+                        obj.xPos = +obj.xPos
+                        obj.yPos = +obj.yPos
+                        obj.reportOrder = +obj.reportOrder
+                        action[obj.toothID] = {
+                            extract: false,
+                            expose: false,
+                            surface: {
+                                [obj.name_Q1]: {},
+                                [obj.name_Q2]: {},
+                                [obj.name_Q3]: {},
+                                [obj.name_Q4]: {},
+                                [obj.name_middle]: {}
+                            }
+                        }
+                        data.byId[obj.toothID] = {
+                            name: obj.toothName,
+                            type: obj.type,
+                            Q1: obj.name_Q1,
+                            Q2: obj.name_Q2,
+                            Q3: obj.name_Q3,
+                            Q4: obj.name_Q4,
+                            middle: obj.name_middle
+                        }
+                        data.reportOrder.push(obj.reportOrder)            // List the tooth reporting order
+                    })
+
+                    d3.selectAll('.field, .textBox').attr('contenteditable', true)       // Setup editable fields        
+                    data.allToothData = d.data                      // Store data  
+                    renderForm(data.allToothData)
+                }
+            })
+
+
+        // Function to render form
+        function renderForm(toothData) {
             // 1. Filter and store datasets for deciduous (child) and permanent (adult) teeth
-              data.deciduous = toothData.filter(d => d.type === 'deciduous')
-              data.permanent = toothData.filter(d => d.type === 'permanent')
+            data.deciduous = toothData.filter(d => d.type === 'deciduous')
+            data.permanent = toothData.filter(d => d.type === 'permanent')
 
             // 2. Render all child teeth
-              data.deciduous.forEach( obj =>  addToothGroup(obj))
-              data.permanent.forEach( obj =>  addToothGroup(obj))
-            
+            data.deciduous.forEach(obj => addToothGroup(obj))
+            data.permanent.forEach(obj => addToothGroup(obj))
+
             // X. Function to add indivudal teeth
-              function addToothGroup(data){
+            function addToothGroup(data) {
                 // 1. Add tooth group
-                  const group = data.type === 'deciduous' ? d3.select('#deciduousTeeth-group') : d3.select('#permanentTeeth-group'),
-                    toothGroup = group.append('g').attr('id', 'tooth_'+data.toothID)
-                      .classed('tooth-group '+data.type, true)
+                const group = data.type === 'deciduous' ? d3.select('#deciduousTeeth-group') : d3.select('#permanentTeeth-group'),
+                    toothGroup = group.append('g').attr('id', 'tooth_' + data.toothID)
+                        .classed('tooth-group ' + data.type, true)
 
                 // 2. Add tooth middle and each tooth quadrant 
-                  const toothParts = toothGroup.append('g').attr('id', 'toothParts_'+data.toothID)
-                  toothParts.append('circle').attr('id', 'tooth'+data.toothID+'-middle')    
-                    .classed('toothPath toothMiddle toothPart '+data.name_middle+' '+data.type, true)
-                    .attr('surface', data.name_middle) 
-                    .attr('cx', 0).attr('cy', 0)            
+                const toothParts = toothGroup.append('g').attr('id', 'toothParts_' + data.toothID)
+                toothParts.append('circle').attr('id', 'tooth' + data.toothID + '-middle')
+                    .classed('toothPath toothMiddle toothPart ' + data.name_middle + ' ' + data.type, true)
+                    .attr('surface', data.name_middle)
+                    .attr('cx', 0).attr('cy', 0)
                     .attr('r', 1.75)
-                  toothParts.append('path').attr('id', 'tooth'+data.toothID+'-Q1')    
-                    .classed('toothPath toothQ1 toothPart '+data.name_Q1+' '+data.type, true)
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q1')
+                    .classed('toothPath toothQ1 toothPart ' + data.name_Q1 + ' ' + data.type, true)
                     .attr('surface', data.name_Q1)
                     .attr('d', "m 0,-3.5 v 1.8781307 A 1.6218661,1.622089 0 0 1 1.6216492,0 H 3.5 A 3.4998614,3.5003425 0 0 0 0,-3.5 Z")
-                  toothParts.append('path').attr('id', 'tooth'+data.toothID+'-Q2')    
-                    .classed('toothPath toothQ2 toothPart '+data.name_Q2+' '+data.type, true)
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q2')
+                    .classed('toothPath toothQ2 toothPart ' + data.name_Q2 + ' ' + data.type, true)
                     .attr('surface', data.name_Q2)
                     .attr('d', "M 0,3.5 V 1.6218693 A 1.6218657,1.622089 0 0 0 1.6216497,0 H 3.5 A 3.4998606,3.5003426 0 0 1 0,3.5 Z")
-                  toothParts.append('path').attr('id', 'tooth'+data.toothID+'-Q3')    
-                    .classed('toothPath toothQ3 toothPart '+data.name_Q3+' '+data.type, true)
-                    .attr('surface', data.name_Q3)                    
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q3')
+                    .classed('toothPath toothQ3 toothPart ' + data.name_Q3 + ' ' + data.type, true)
+                    .attr('surface', data.name_Q3)
                     .attr('d', "M 0,3.5 V 1.6218693 A 1.6218661,1.622089 0 0 1 -1.6216492,0 H -3.5 A 3.4998615,3.5003426 0 0 0 0,3.5 Z")
-                  toothParts.append('path').attr('id', 'tooth'+data.toothID+'-Q4')    
-                    .classed('toothPath toothQ3 toothPart '+data.name_Q4+' '+data.type, true)
-                    .attr('surface', data.name_Q4)                    
+                toothParts.append('path').attr('id', 'tooth' + data.toothID + '-Q4')
+                    .classed('toothPath toothQ3 toothPart ' + data.name_Q4 + ' ' + data.type, true)
+                    .attr('surface', data.name_Q4)
                     .attr('d', "m 0,-3.5 v 1.8781307 A 1.6218661,1.622089 0 0 0 -1.6216492,0 H -3.5 A 3.4998614,3.5003425 0 0 1 0,-3.5 Z")
 
                 // 3. Add tooth extraction cross mark
-                  const toothCross = toothGroup.append('g').attr('id', 'extract-'+data.toothID)
+                const toothCross = toothGroup.append('g').attr('id', 'extract-' + data.toothID)
                     .classed('toothCross', true)
-                  toothCross.append('path').classed('toothCrossMark', true)
+                toothCross.append('path').classed('toothCrossMark', true)
                     .attr('d', "M-.196-3.902h.664v7.579h-.664z")
                     .attr('transform', 'rotate(-45)')
-                  toothCross.append('path').classed('toothCrossMark', true)
+                toothCross.append('path').classed('toothCrossMark', true)
                     .attr('d', "M-.444-3.926H.22v7.579h-.664z")
                     .attr('transform', 'rotate(45)')
 
                 // 4. Add tooth label
-                  const toothQuadrant = (data.side === 'right') ? (data.section === 'upper') ? 'q1' : 'q2' : (data.section === 'upper') ? 'q4' : 'q3'
-                    yOffset = 13,
+                const toothQuadrant = (data.side === 'right') ? (data.section === 'upper') ? 'q1' : 'q2' : (data.section === 'upper') ? 'q4' : 'q3'
+                yOffset = 13,
                     labelOffset = 6,
-                    angleFromX = Math.atan( (Math.abs(data.yPos) - yOffset) / Math.abs(data.xPos))
+                    angleFromX = Math.atan((Math.abs(data.yPos) - yOffset) / Math.abs(data.xPos))
 
-                  // a. Determine label position object
-                    let labelPos = {  permanent: {},  deciduous: {} }
-                    if (toothQuadrant === 'q1'){
-                        labelPos.permanent.x = + Math.cos(angleFromX) * labelOffset
-                        labelPos.permanent.y = - Math.sin(angleFromX) * labelOffset 
-                        labelPos.deciduous.x = - Math.cos(angleFromX) * labelOffset
-                        labelPos.deciduous.y = + Math.sin(angleFromX) * labelOffset
-                    } else if (toothQuadrant === 'q2'){
-                        labelPos.permanent.x = + Math.cos(angleFromX) * labelOffset
-                        labelPos.permanent.y = + Math.sin(angleFromX) * labelOffset 
-                        labelPos.deciduous.x = - Math.cos(angleFromX) * labelOffset
-                        labelPos.deciduous.y = - Math.sin(angleFromX) * labelOffset
-                    } else if (toothQuadrant === 'q3'){
-                        labelPos.permanent.x = - Math.cos(angleFromX) * labelOffset
-                        labelPos.permanent.y = + Math.sin(angleFromX) * labelOffset 
-                        labelPos.deciduous.x = + Math.cos(angleFromX) * labelOffset
-                        labelPos.deciduous.y = - Math.sin(angleFromX) * labelOffset                  
-                    } else if (toothQuadrant === 'q4'){
-                        labelPos.permanent.x = - Math.cos(angleFromX) * labelOffset
-                        labelPos.permanent.y = - Math.sin(angleFromX) * labelOffset 
-                        labelPos.deciduous.x = + Math.cos(angleFromX) * labelOffset
-                        labelPos.deciduous.y = + Math.sin(angleFromX) * labelOffset                     
-                    }
+                // a. Determine label position object
+                let labelPos = { permanent: {}, deciduous: {} }
+                if (toothQuadrant === 'q1') {
+                    labelPos.permanent.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = - Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = + Math.sin(angleFromX) * labelOffset
+                } else if (toothQuadrant === 'q2') {
+                    labelPos.permanent.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = + Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = - Math.sin(angleFromX) * labelOffset
+                } else if (toothQuadrant === 'q3') {
+                    labelPos.permanent.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = + Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = - Math.sin(angleFromX) * labelOffset
+                } else if (toothQuadrant === 'q4') {
+                    labelPos.permanent.x = - Math.cos(angleFromX) * labelOffset
+                    labelPos.permanent.y = - Math.sin(angleFromX) * labelOffset
+                    labelPos.deciduous.x = + Math.cos(angleFromX) * labelOffset
+                    labelPos.deciduous.y = + Math.sin(angleFromX) * labelOffset
+                }
 
-                  // b. Append tooth ID label
-                    toothGroup.append('text').attr('id', 'label-'+data.toothID)
-                      .classed('toothIdLabel', true)
-                      .attr('dy', 1.5)
-                      .attr('x', labelPos[data.type].x).attr('y', labelPos[data.type].y)
-                      .text(data.toothID)
+                // b. Append tooth ID label
+                toothGroup.append('text').attr('id', 'label-' + data.toothID)
+                    .classed('toothIdLabel', true)
+                    .attr('dy', 1.5)
+                    .attr('x', labelPos[data.type].x).attr('y', labelPos[data.type].y)
+                    .text(data.toothID)
 
                 // 5. Add transforms
-                  toothGroup.attr('transform', 'translate('+data.xPos+','+data.yPos+')')      // Move the whole group into position
-                  toothParts.style('transform', 'rotate('+data.rotation+'deg)')               // Rotate tooth parts
+                toothGroup.attr('transform', 'translate(' + data.xPos + ',' + data.yPos + ')')      // Move the whole group into position
+                toothParts.style('transform', 'rotate(' + data.rotation + 'deg)')               // Rotate tooth parts
 
                 // 6. Add event listeners
-                  // a. Tooth group double click to cylce betweeen extract, expose and nothing
-                    d3.selectAll('.tooth-group')
-                      // .on('click',  function(){d3.event.stopPropagation()} )
-                      .on('dblclick', methods.updateToothAction)
-
-                  //b. Attach all tooth surface events
-                  d3.selectAll('.toothPath')
-                    .on('click', function(){ methods.toolTipActive(this, d3.event.pageX, d3.event.pageY)  })
+                // a. Tooth group double click to cylce betweeen extract, expose and nothing
+                d3.selectAll('.tooth-group')
+                    // .on('click',  function(){d3.event.stopPropagation()} )
                     .on('dblclick', methods.updateToothAction)
-                    .on("mouseover", function(){  methods.toolTipOn(this, d3.event.pageX, d3.event.pageY) })          
-                    .on("mouseout", () => d3.select('#tooltip').classed('hidden', true) )        
+
+                //b. Attach all tooth surface events
+                d3.selectAll('.toothPath')
+                    .on('click', function () { methods.toolTipActive(this, d3.event.pageX, d3.event.pageY) })
+                    .on('dblclick', methods.updateToothAction)
+                    .on("mouseover", function () { methods.toolTipOn(this, d3.event.pageX, d3.event.pageY) })
+                    .on("mouseout", () => d3.select('#tooltip').classed('hidden', true))
 
                 // 6. Add reset tooltip click to body
-                  d3.select('#teethDiagram').on('click', methods.resetTooltips)
+                d3.select('#teethDiagram').on('click', methods.resetTooltips)
 
-              }; // end addToothGroup
-          }; // end renderFrom}
+            }; // end addToothGroup
+        }; // end renderFrom}
 
-          // Interaction methods
-          const methods = {            
-            updateTreatmentName: () => { 
-              d3.select('#treatmentString').html('Please provide the following treatment for '+document.getElementById("patientFirstName").value+':')
+        // Interaction methods
+        const methods = {
+            updateTreatmentName: () => {
+                d3.select('#treatmentString').html('Please provide the following treatment for ' + document.getElementById("patientFirstName").value + ':')
             },
 
             resetTooltips: () => {
                 d3.selectAll('.toothPart').classed('assess', false)                             // Clear any surfaces marked as being in assess highlight mode
-                d3.select('#tooltip').transition().duration(200).style("opacity", 0)  
-                d3.selectAll('.tooth-group').transition().duration(200).style('opacity', 1)      
-                setTimeout( () => { d3.select('#tooltip').classed('hidden', true)}, 200)      
+                d3.select('#tooltip').transition().duration(200).style("opacity", 0)
+                d3.selectAll('.tooth-group').transition().duration(200).style('opacity', 1)
+                setTimeout(() => { d3.select('#tooltip').classed('hidden', true) }, 200)
 
                 d3.selectAll('.toothPath')
-                  .on('click', function(){ methods.toolTipActive(this, d3.event.pageX, d3.event.pageY)  })
-                  .on("mouseover", function(){ methods.toolTipOn(this, d3.event.pageX, d3.event.pageY)  })          
-                  .on("mouseout", () => d3.select('#tooltip').classed('hidden', true) )           
+                    .on('click', function () { methods.toolTipActive(this, d3.event.pageX, d3.event.pageY) })
+                    .on("mouseover", function () { methods.toolTipOn(this, d3.event.pageX, d3.event.pageY) })
+                    .on("mouseout", () => d3.select('#tooltip').classed('hidden', true))
             },
 
-            updateToothAction:  function(){
-              d3.event.stopPropagation()
-              const id = this.id.slice(5,7)      
-           
-              // a. Cycle through possible status:
+            updateToothAction: function () {
+                d3.event.stopPropagation()
+                const id = this.id.slice(5, 7)
+
+                // a. Cycle through possible status:
                 // i.  No status > Expose
-                if(!action[id].extract && !action[id].expose){
-                  action[id]['expose'] = true
-                  d3.selectAll('#tooth'+id+'-middle,#tooth'+id+'-Q1, #tooth'+id+'-Q2, #tooth'+id+'-Q3, #tooth'+id+'-Q4').classed('expose', true)
-                  d3.selectAll('#toothParts_'+id+' *').on('click', null)                   
-                  d3.select('#tip-treatment-container').classed('hidden', true)                  
-                  d3.select('#tip-wholeTooth').classed('hidden', false).html('Requested for exposure')
+                if (!action[id].extract && !action[id].expose) {
+                    action[id]['expose'] = true
+                    d3.selectAll('#tooth' + id + '-middle,#tooth' + id + '-Q1, #tooth' + id + '-Q2, #tooth' + id + '-Q3, #tooth' + id + '-Q4').classed('expose', true)
+                    d3.selectAll('#toothParts_' + id + ' *').on('click', null)
+                    d3.select('#tip-treatment-container').classed('hidden', true)
+                    d3.select('#tip-wholeTooth').classed('hidden', false).html('Requested for exposure')
 
-                // ii. Expose to extract
-                } else if(!action[id].extract && action[id].expose){
-                  action[id].expose = false
-                  action[id].extract = true
-                  d3.selectAll('#tooth'+id+'-middle,#tooth'+id+'-Q1, #tooth'+id+'-Q2, #tooth'+id+'-Q3, #tooth'+id+'-Q4').classed('expose', false).classed('assess', false)   
-                  d3.select('#extract-'+id).classed('extract', true)        
-                  d3.select('#tip-wholeTooth').classed('hidden', false).html('Requested for extraction')                  
+                    // ii. Expose to extract
+                } else if (!action[id].extract && action[id].expose) {
+                    action[id].expose = false
+                    action[id].extract = true
+                    d3.selectAll('#tooth' + id + '-middle,#tooth' + id + '-Q1, #tooth' + id + '-Q2, #tooth' + id + '-Q3, #tooth' + id + '-Q4').classed('expose', false).classed('assess', false)
+                    d3.select('#extract-' + id).classed('extract', true)
+                    d3.select('#tip-wholeTooth').classed('hidden', false).html('Requested for extraction')
 
-                // iii. Extract to no status
-                } else if(action[id].extract && !action[id].expose){
-                  action[id].expose = false
-                  action[id].extract = false
-                  d3.select('#extract-'+id).classed('extract', false)     
-                  d3.select('#tip-treatment-container').classed('hidden', false)   
-                  d3.select('#tip-wholeTooth').classed('hidden', true)                                                            
+                    // iii. Extract to no status
+                } else if (action[id].extract && !action[id].expose) {
+                    action[id].expose = false
+                    action[id].extract = false
+                    d3.select('#extract-' + id).classed('extract', false)
+                    d3.select('#tip-treatment-container').classed('hidden', false)
+                    d3.select('#tip-wholeTooth').classed('hidden', true)
                 }
 
-              // b. Remove any previously selected surface actions
-                 Object.keys(action[id]['surface']).forEach( name =>  action[id]['surface'][name] = {})     // From action data
-                 d3.selectAll('.toothParts_'+id+' *').classed('treat', false).classed('treatAll', false)    // and parts with treatment selection
+                // b. Remove any previously selected surface actions
+                Object.keys(action[id]['surface']).forEach(name => action[id]['surface'][name] = {})     // From action data
+                d3.selectAll('.toothParts_' + id + ' *').classed('treat', false).classed('treatAll', false)    // and parts with treatment selection
 
-              // c. update commentary
-               methods.updateRequestText()
+                // c. update commentary
+                methods.updateRequestText()
             },
 
-            toolTipOn: function(el, x, y){
-              d3.event.stopPropagation()
-              const id = el.id.slice(5,7), 
-                toothQ = el.id.slice(el.id.indexOf('-') + 1), 
-                surfaceName = data.byId[id][toothQ]
+            toolTipOn: function (el, x, y) {
+                d3.event.stopPropagation()
+                const id = el.id.slice(5, 7),
+                    toothQ = el.id.slice(el.id.indexOf('-') + 1),
+                    surfaceName = data.byId[id][toothQ]
 
-              d3.select('#tip-toothNumber').html(id+'.').classed('bold', true)
-              d3.select('#tip-toothName').html(data.byId[id].name).classed('bold', true)
-              d3.select('#tip-toothSurface').html(data.byId[id][toothQ]).classed('bold', true)   
-              d3.select('#tooltip').classed('hidden', false)
-                .style("left", (x - 150) + "px")   
-                .style("top", (y + 20) + "px")
-                .transition().duration(0)    
-                  .style("opacity", .75)      
-
-              // A. DEFAULT: WHEN TOOTH ACTION HAS NOT BEEN REQUESTED YET
-              if(!action[id].extract && !action[id].expose){
-                d3.select('#tip-instruction').html('Tap any tooth surface to specify a treatment action or double tap any part of a tooth to cycle between actions for tooth extraction, exposure and none.')     
-                d3.selectAll('#tip-treatment-container, #tip-options, #tip-wholeTooth').classed('hidden', true)
-              // B. WHEN TOOTH ACTION IS ALREADY REQUESTED
-              } else {
-                d3.select('#tip-instruction').html('Double tap any part the tooth to change request')   
-                d3.selectAll('#tip-treatment-container').classed('hidden', true)                
-                d3.select('#tip-wholeTooth').classed('hidden', false)   
-              }
-            },
-
-            toolTipActive: function(el, x, y){
-              d3.event.stopPropagation()
-              const id = el.id.slice(5,7), 
-                toothQ = el.id.slice(el.id.indexOf('-') + 1), 
-                surfaceName = data.byId[id][toothQ]
-
-              // A. FOR SURFACE TREATMENT
-              if(!action[id].extract && !action[id].expose){
-                // a. Higlight surface for assessment
-                  d3.selectAll('.toothPart:not(#'+el.id+')').classed('assess', false)
-                  el.classList.add('assess')
-             
-                // b. Set tooltip
-                  d3.select('#tip-toothNumber').html(id+'.').classed('bold', true)
-                  d3.select('#tip-toothName').html(data.byId[id].name).classed('bold', true)
-                  d3.select('#tip-toothSurface').html(data.byId[id][toothQ]).classed('bold', true) 
-                  d3.select('#tip-instruction').html('Specify a treatment and confirm to add to the request') 
-                  d3.select('#tip-treatment-container').classed('hidden', false)             
-                  d3.selectAll('#tip-options, #tip-wholeTooth').classed('hidden', true)
-
-                // c. Show tooltip
-                  d3.select('#tooltip').classed('hidden', false)
-                    .style("left", (x - 150) + "px")   
+                d3.select('#tip-toothNumber').html(id + '.').classed('bold', true)
+                d3.select('#tip-toothName').html(data.byId[id].name).classed('bold', true)
+                d3.select('#tip-toothSurface').html(data.byId[id][toothQ]).classed('bold', true)
+                d3.select('#tooltip').classed('hidden', false)
+                    .style("left", (x - 150) + "px")
                     .style("top", (y + 20) + "px")
-                    .transition().duration(200)    
-                      .style("opacity", .75)    
+                    .transition().duration(0)
+                    .style("opacity", .75)
 
-                // d. Fade out other teeth and disable interactions
-                  d3.selectAll('.tooth-group').transition().duration(200).style('opacity', 1)
-                  d3.selectAll('.tooth-group:not(#tooth_'+id).transition().duration(200).style('opacity', 0.2)
-                  d3.selectAll('.toothPath').on("mouseover", null).on("mouseout", null)  
-                  d3.selectAll('.tooth-group').on('dblclick', null)
+                // A. DEFAULT: WHEN TOOTH ACTION HAS NOT BEEN REQUESTED YET
+                if (!action[id].extract && !action[id].expose) {
+                    d3.select('#tip-instruction').html('Tap any tooth surface to specify a treatment action or double tap any part of a tooth to cycle between actions for tooth extraction, exposure and none.')
+                    d3.selectAll('#tip-treatment-container, #tip-options, #tip-wholeTooth').classed('hidden', true)
+                    // B. WHEN TOOTH ACTION IS ALREADY REQUESTED
+                } else {
+                    d3.select('#tip-instruction').html('Double tap any part the tooth to change request')
+                    d3.selectAll('#tip-treatment-container').classed('hidden', true)
+                    d3.select('#tip-wholeTooth').classed('hidden', false)
+                }
+            },
 
-                // e. Select, show selected and record selections
-                  // i. Check for treatment action object for tooth             
+            toolTipActive: function (el, x, y) {
+                d3.event.stopPropagation()
+                const id = el.id.slice(5, 7),
+                    toothQ = el.id.slice(el.id.indexOf('-') + 1),
+                    surfaceName = data.byId[id][toothQ]
+
+                // A. FOR SURFACE TREATMENT
+                if (!action[id].extract && !action[id].expose) {
+                    // a. Higlight surface for assessment
+                    d3.selectAll('.toothPart:not(#' + el.id + ')').classed('assess', false)
+                    el.classList.add('assess')
+
+                    // b. Set tooltip
+                    d3.select('#tip-toothNumber').html(id + '.').classed('bold', true)
+                    d3.select('#tip-toothName').html(data.byId[id].name).classed('bold', true)
+                    d3.select('#tip-toothSurface').html(data.byId[id][toothQ]).classed('bold', true)
+                    d3.select('#tip-instruction').html('Specify a treatment and confirm to add to the request')
+                    d3.select('#tip-treatment-container').classed('hidden', false)
+                    d3.selectAll('#tip-options, #tip-wholeTooth').classed('hidden', true)
+
+                    // c. Show tooltip
+                    d3.select('#tooltip').classed('hidden', false)
+                        .style("left", (x - 150) + "px")
+                        .style("top", (y + 20) + "px")
+                        .transition().duration(200)
+                        .style("opacity", .75)
+
+                    // d. Fade out other teeth and disable interactions
+                    d3.selectAll('.tooth-group').transition().duration(200).style('opacity', 1)
+                    d3.selectAll('.tooth-group:not(#tooth_' + id).transition().duration(200).style('opacity', 0.2)
+                    d3.selectAll('.toothPath').on("mouseover", null).on("mouseout", null)
+                    d3.selectAll('.tooth-group').on('dblclick', null)
+
+                    // e. Select, show selected and record selections
+                    // i. Check for treatment action object for tooth             
                     d3.selectAll('.actionType, .treatmentType').classed('selected', false)              // Clear all selections
 
-                    if(Object.keys(action[id]['surface'][surfaceName]).length !== 0){                   // Add selections if action exists for the surface 
-                      d3.select('#'+action[id]['surface'][surfaceName].type).classed('selected', true)
-                      d3.select('#'+action[id]['surface'][surfaceName].action).classed('selected', true)
-                      d3.select('#tip-options').classed('hidden', false)                    
+                    if (Object.keys(action[id]['surface'][surfaceName]).length !== 0) {                   // Add selections if action exists for the surface 
+                        d3.select('#' + action[id]['surface'][surfaceName].type).classed('selected', true)
+                        d3.select('#' + action[id]['surface'][surfaceName].action).classed('selected', true)
+                        d3.select('#tip-options').classed('hidden', false)
                     }
 
-                  // ii. Event listeners Update selections visualisations visually and update the action records
+                    // ii. Event listeners Update selections visualisations visually and update the action records
                     d3.selectAll('.actionType')
-                      .on('click', function(){
-                        this.classList.add('selected')                                                     // Visually update selection
-                        d3.selectAll('.actionType:not(#'+this.id+')').classed('selected', false)          
-                        action[id]['surface'][surfaceName].type = this.id
-                        if( action[id]['surface'][surfaceName].type && action[id]['surface'][surfaceName].action){
-                          d3.select('#tip-options').classed('hidden', false)
-                        }
-                      })
+                        .on('click', function () {
+                            this.classList.add('selected')                                                     // Visually update selection
+                            d3.selectAll('.actionType:not(#' + this.id + ')').classed('selected', false)
+                            action[id]['surface'][surfaceName].type = this.id
+                            if (action[id]['surface'][surfaceName].type && action[id]['surface'][surfaceName].action) {
+                                d3.select('#tip-options').classed('hidden', false)
+                            }
+                        })
 
                     d3.selectAll('.treatmentType')
-                      .on('click', function(){              
-                        this.classList.add('selected')          // Visuall update the tip box                    
-                        d3.selectAll('.treatmentType:not(#'+this.id+')').classed('selected', false)    
-                        action[id]['surface'][surfaceName].action = this.id                    
-                        if( action[id]['surface'][surfaceName].type && action[id]['surface'][surfaceName].action){
-                          d3.select('#tip-options').classed('hidden', false)
-                        }
-                      })                
+                        .on('click', function () {
+                            this.classList.add('selected')          // Visuall update the tip box                    
+                            d3.selectAll('.treatmentType:not(#' + this.id + ')').classed('selected', false)
+                            action[id]['surface'][surfaceName].action = this.id
+                            if (action[id]['surface'][surfaceName].type && action[id]['surface'][surfaceName].action) {
+                                d3.select('#tip-options').classed('hidden', false)
+                            }
+                        })
 
-                  // iii. Event listener for add and remove from request buttons
+                    // iii. Event listener for add and remove from request buttons
                     d3.select('#confirmSurfaceTreatment').on('click', () => {
-                      d3.selectAll('#toothParts_'+id+' > *').classed('treatAll', false)
-                      methods.resetTooltips()
-                      methods.updateRequestText()
-                      el.classList.remove('assess')
-                      el.classList.add('treat')
-                      d3.select('#tooltip').classed('hidden', true)
+                        d3.selectAll('#toothParts_' + id + ' > *').classed('treatAll', false)
+                        methods.resetTooltips()
+                        methods.updateRequestText()
+                        el.classList.remove('assess')
+                        el.classList.add('treat')
+                        d3.select('#tooltip').classed('hidden', true)
                     })
 
-                    d3.select('#removeSurfaceTreatment').on('click', () =>{
-                      action[id]['surface'][surfaceName] = {}
-                      el.classList.remove('assess')
-                      el.classList.remove('treat')       
-                      d3.selectAll('#toothParts_'+id+' > *').classed('treatAll', false)
-                      d3.select('#tooltip').classed('hidden', true)                             
-                      methods.resetTooltips()
-                      methods.updateRequestText()
+                    d3.select('#removeSurfaceTreatment').on('click', () => {
+                        action[id]['surface'][surfaceName] = {}
+                        el.classList.remove('assess')
+                        el.classList.remove('treat')
+                        d3.selectAll('#toothParts_' + id + ' > *').classed('treatAll', false)
+                        d3.select('#tooltip').classed('hidden', true)
+                        methods.resetTooltips()
+                        methods.updateRequestText()
                     })
 
 
-              // B. WHEN WHOLE OF TOOTH ACTION IS SELECTED
-              } else {
-                d3.select('#tip-instruction').html('Double tap any part the tooth to change request')                   
-                d3.select('#tip-wholeTooth').classed('hidden', false)   
-              }
+                    // B. WHEN WHOLE OF TOOTH ACTION IS SELECTED
+                } else {
+                    d3.select('#tip-instruction').html('Double tap any part the tooth to change request')
+                    d3.select('#tip-wholeTooth').classed('hidden', false)
+                }
             },
 
             updateRequestText: () => {
-              d3.select('#treatmentText *').remove()
-              const requestDiv = d3.select('#treatmentText').append('div'),
-                requestList = requestDiv.append('ul')
+                d3.select('#treatmentText *').remove()
+                const requestDiv = d3.select('#treatmentText').append('div'),
+                    requestList = requestDiv.append('ul')
                 treatmentOrder = ["extract", 'expose', 'restore', 'assessManage'],        // Listed as named in data objexts
-                surfaceOrder = [ "Mesial", "Distal", "Occlusal", "Buccal", "Labial", "Palatal", "Lingual", "Incisal"],
-                sortedToothData = data.allToothData.sort((a,b) => a.reportOrder - b.reportOrder)
+                    surfaceOrder = ["Mesial", "Distal", "Occlusal", "Buccal", "Labial", "Palatal", "Lingual", "Incisal"],
+                    sortedToothData = data.allToothData.sort((a, b) => a.reportOrder - b.reportOrder)
 
-              // 1. Create a treatement list for all affected tools (for re-ordering)                           
+                // 1. Create a treatement list for all affected tools (for re-ordering)                           
                 const treatmentData = []
                 sortedToothData.forEach(obj => {
-                  // a. Determine treatment type
-                  const treatment =  (function(){
-                    if( action[obj.toothID].extract) {
-                      return 'extract' 
-                    } else if(action[obj.toothID].expose) {
-                      return 'expose'                       
-                    } else {
-                      return (d3.sum(Object.values(action[obj.toothID].surface).map(d => Object.values(d).length)) > 0) ? 'surface' : null
-                    }
-                  }())
+                    // a. Determine treatment type
+                    const treatment = (function () {
+                        if (action[obj.toothID].extract) {
+                            return 'extract'
+                        } else if (action[obj.toothID].expose) {
+                            return 'expose'
+                        } else {
+                            return (d3.sum(Object.values(action[obj.toothID].surface).map(d => Object.values(d).length)) > 0) ? 'surface' : null
+                        }
+                    }())
 
-                  // b. Arrange surface treatments by Restore and Aasees and manage
-                  const surfaceObj = { restore:  {},    assessManage:   {}  },
-                    surfaceOrdered = []
-                  Object.keys(action[obj.toothID].surface).forEach( surfaceName => {
-                    if(action[obj.toothID].surface[surfaceName].action === 'restore'){
-                      surfaceObj.restore[surfaceName] =  action[obj.toothID].surface[surfaceName].type 
-                    } else if(action[obj.toothID].surface[surfaceName].action === 'assessManage'){
-                      surfaceObj.assessManage[surfaceName] =  action[obj.toothID].surface[surfaceName].type 
-                    }
-                  })
-
-                  // c. Push object to treatment data for parsing to text
-                  if(treatment){
-                    treatmentData.push({
-                      toothID:          obj.toothID,
-                      treatment:        treatment, 
-                      surfaceDetails:   surfaceObj
+                    // b. Arrange surface treatments by Restore and Aasees and manage
+                    const surfaceObj = { restore: {}, assessManage: {} },
+                        surfaceOrdered = []
+                    Object.keys(action[obj.toothID].surface).forEach(surfaceName => {
+                        if (action[obj.toothID].surface[surfaceName].action === 'restore') {
+                            surfaceObj.restore[surfaceName] = action[obj.toothID].surface[surfaceName].type
+                        } else if (action[obj.toothID].surface[surfaceName].action === 'assessManage') {
+                            surfaceObj.assessManage[surfaceName] = action[obj.toothID].surface[surfaceName].type
+                        }
                     })
-                  }
+
+                    // c. Push object to treatment data for parsing to text
+                    if (treatment) {
+                        treatmentData.push({
+                            toothID: obj.toothID,
+                            treatment: treatment,
+                            surfaceDetails: surfaceObj
+                        })
+                    }
                 })
 
-              // 2. Create request section text
+                // 2. Create request section text
                 const extractionIDs = treatmentData.filter(obj => obj.treatment === 'extract'),
-                  extractionIDarray =  extractionIDs.map(d => d. toothID),
-                  exposureIDs = treatmentData.filter(obj => obj.treatment === 'expose'),
-                  exposureIDarray =  exposureIDs.map(d => d. toothID),
-                  surfaceIDs = treatmentData.filter(obj => obj.treatment === 'surface')
+                    extractionIDarray = extractionIDs.map(d => d.toothID),
+                    exposureIDs = treatmentData.filter(obj => obj.treatment === 'expose'),
+                    exposureIDarray = exposureIDs.map(d => d.toothID),
+                    surfaceIDs = treatmentData.filter(obj => obj.treatment === 'surface')
 
                 const oppositeTeethGroups = [
-                  {pair: [18, 28], type: 'maxillary right and left third molars (18 and 28)'},
-                  {pair: [17, 27], type: 'maxillary right and left <span class = "permanent">permanent</span> second molars (17 and 27)'},
-                  {pair: [16, 26], type: 'maxillary right and left <span class = "permanent">permanent</span> first molars (16 and 26)'},
-                  {pair: [15, 25], type: 'maxillary right and left second bicuspids (15 and 25)'},
-                  {pair: [14, 24], type: 'maxillary right and left first bicuspids (14 and 24)'},
-                  {pair: [13, 23], type: 'maxillary right and left <span class = "permanent">permanent</span> first cuspids (13 and 23)'},
-                  {pair: [12, 22], type: 'maxillary right and left <span class = "permanent">permanent</span> lateral incisors (12 and 22)'},
-                  {pair: [11, 21], type: 'maxillary right and left <span class = "permanent">permanent</span> central incisors (11 and 21)'},
+                    { pair: [18, 28], type: 'maxillary right and left third molars (18 and 28)' },
+                    { pair: [17, 27], type: 'maxillary right and left <span class = "permanent">permanent</span> second molars (17 and 27)' },
+                    { pair: [16, 26], type: 'maxillary right and left <span class = "permanent">permanent</span> first molars (16 and 26)' },
+                    { pair: [15, 25], type: 'maxillary right and left second bicuspids (15 and 25)' },
+                    { pair: [14, 24], type: 'maxillary right and left first bicuspids (14 and 24)' },
+                    { pair: [13, 23], type: 'maxillary right and left <span class = "permanent">permanent</span> first cuspids (13 and 23)' },
+                    { pair: [12, 22], type: 'maxillary right and left <span class = "permanent">permanent</span> lateral incisors (12 and 22)' },
+                    { pair: [11, 21], type: 'maxillary right and left <span class = "permanent">permanent</span> central incisors (11 and 21)' },
 
-                  {pair: [38, 48], type: 'mandibular left and right third molars (38 and 48)'},
-                  {pair: [37, 47], type: 'mandibular left and right <span class = "permanent">permanent</span> second molars (37 and 47)'},
-                  {pair: [36, 46], type: 'mandibular left and right <span class = "permanent">permanent</span> first molars (36 and 46)'},
-                  {pair: [35, 45], type: 'mandibular left and right second bicuspids (35 and 45)'},
-                  {pair: [34, 44], type: 'mandibular left and right first bicuspids (34 and 44)'},
-                  {pair: [33, 43], type: 'mandibular left and right <span class = "permanent">permanent</span> first cuspids (33 and 43)'},
-                  {pair: [32, 42], type: 'mandibular left and right <span class = "permanent">permanent</span> lateral incisors (32 and 42)'},
-                  {pair: [31, 41], type: 'mandibular left and right <span class = "permanent">permanent</span> central incisors (31 and 41)'},
+                    { pair: [38, 48], type: 'mandibular left and right third molars (38 and 48)' },
+                    { pair: [37, 47], type: 'mandibular left and right <span class = "permanent">permanent</span> second molars (37 and 47)' },
+                    { pair: [36, 46], type: 'mandibular left and right <span class = "permanent">permanent</span> first molars (36 and 46)' },
+                    { pair: [35, 45], type: 'mandibular left and right second bicuspids (35 and 45)' },
+                    { pair: [34, 44], type: 'mandibular left and right first bicuspids (34 and 44)' },
+                    { pair: [33, 43], type: 'mandibular left and right <span class = "permanent">permanent</span> first cuspids (33 and 43)' },
+                    { pair: [32, 42], type: 'mandibular left and right <span class = "permanent">permanent</span> lateral incisors (32 and 42)' },
+                    { pair: [31, 41], type: 'mandibular left and right <span class = "permanent">permanent</span> central incisors (31 and 41)' },
 
-                  {pair: [55, 65], type: 'maxillary right and left <span class = "deciduous">deciduous</span> second molars (55 and 65)'},                   
-                  {pair: [54, 64], type: 'maxillary right and left <span class = "deciduous">deciduous</span> first molars (54 and 64)'},                   
-                  {pair: [53, 63], type: 'maxillary right and left <span class = "deciduous">deciduous</span> cuspids (53 and 63)'},                   
-                  {pair: [52, 62], type: 'maxillary right and left <span class = "deciduous">deciduous</span> lateral incisors (52 and 62)'},                   
-                  {pair: [51, 61], type: 'maxillary right and left <span class = "deciduous">deciduous</span> central incisors (51 and 61)'},    
+                    { pair: [55, 65], type: 'maxillary right and left <span class = "deciduous">deciduous</span> second molars (55 and 65)' },
+                    { pair: [54, 64], type: 'maxillary right and left <span class = "deciduous">deciduous</span> first molars (54 and 64)' },
+                    { pair: [53, 63], type: 'maxillary right and left <span class = "deciduous">deciduous</span> cuspids (53 and 63)' },
+                    { pair: [52, 62], type: 'maxillary right and left <span class = "deciduous">deciduous</span> lateral incisors (52 and 62)' },
+                    { pair: [51, 61], type: 'maxillary right and left <span class = "deciduous">deciduous</span> central incisors (51 and 61)' },
 
-                  {pair: [75, 85], type: 'mandibular left and right <span class = "deciduous">deciduous</span> second molars (75 and 85)'},                   
-                  {pair: [74, 84], type: 'mandibular left and right <span class = "deciduous">deciduous</span> first molars (74 and 84)'},                   
-                  {pair: [73, 83], type: 'mandibular left and right <span class = "deciduous">deciduous</span> cuspids (73 and 83)'},                   
-                  {pair: [72, 82], type: 'mandibular left and right <span class = "deciduous">deciduous</span> lateral incisors (72 and 82)'},                   
-                  {pair: [71, 81], type: 'mandibular left and right <span class = "deciduous">deciduous</span> central incisors (71 and 81)'},    
+                    { pair: [75, 85], type: 'mandibular left and right <span class = "deciduous">deciduous</span> second molars (75 and 85)' },
+                    { pair: [74, 84], type: 'mandibular left and right <span class = "deciduous">deciduous</span> first molars (74 and 84)' },
+                    { pair: [73, 83], type: 'mandibular left and right <span class = "deciduous">deciduous</span> cuspids (73 and 83)' },
+                    { pair: [72, 82], type: 'mandibular left and right <span class = "deciduous">deciduous</span> lateral incisors (72 and 82)' },
+                    { pair: [71, 81], type: 'mandibular left and right <span class = "deciduous">deciduous</span> central incisors (71 and 81)' },
                 ]
 
                 // Return exceptions
                 const extractPairs = oppositeTeethGroups.filter(obj => extractionIDarray.indexOf(obj.pair[0]) > -1 && extractionIDarray.indexOf(obj.pair[1]) > -1),
-                 exposurePairs = oppositeTeethGroups.filter(obj => exposureIDarray.indexOf(obj.pair[0]) > -1 && exposureIDarray.indexOf(obj.pair[1]) > -1)
+                    exposurePairs = oppositeTeethGroups.filter(obj => exposureIDarray.indexOf(obj.pair[0]) > -1 && exposureIDarray.indexOf(obj.pair[1]) > -1)
 
                 // Ia. EXTRACTION: Exception case ALL BACK MOLARS
-                if(action['18'].extract && action['28'].extract && action['38'].extract && action['48'].extract ){
-                  requestList.append('li').html('EXTRACT all four third molars (18, 28, 38 and 48).')
-                  // Add all other extractions 
-                  extractionIDs.forEach(d => {
-                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
-                    if([18, 28, 38, 48].indexOf(toothID) === -1){
-                      requestList.append('li').html('EXTRACT '+toothName+' ('+toothID+')')  
-                    }
-                  })  
+                if (action['18'].extract && action['28'].extract && action['38'].extract && action['48'].extract) {
+                    requestList.append('li').html('EXTRACT all four third molars (18, 28, 38 and 48).')
+                    // Add all other extractions 
+                    extractionIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if ([18, 28, 38, 48].indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
 
-                // Ia. EXTRACTION: Exception case SAME LEFT AND RIGHT
-                } else if(extractPairs.length > 0){          
-                  let exceptions = []
-                  extractPairs.forEach( pairObj =>{
-                    requestList.append('li').html('EXTRACT '+pairObj.type)
-                    exceptions = exceptions.concat(pairObj.pair)                  })
-                  // Add all other extractions 
-                  extractionIDs.forEach(d => {
-                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
-                    if(exceptions.indexOf(toothID) === -1){
-                      requestList.append('li').html('EXTRACT '+toothName+' ('+toothID+')')  
-                    }
-                  })  
+                    // Ia. EXTRACTION: Exception case SAME LEFT AND RIGHT
+                } else if (extractPairs.length > 0) {
+                    let exceptions = []
+                    extractPairs.forEach(pairObj => {
+                        requestList.append('li').html('EXTRACT ' + pairObj.type)
+                        exceptions = exceptions.concat(pairObj.pair)
+                    })
+                    // Add all other extractions 
+                    extractionIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if (exceptions.indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
 
-                // Ic. EXTRACTION: STANDARD CASE                 
-                } else {       
-                  extractionIDs.forEach(d => {
-                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
-                    requestList.append('li').html('EXTRACT '+toothName+' ('+toothID+')')
-                  })
-                }    
+                    // Ic. EXTRACTION: STANDARD CASE                 
+                } else {
+                    extractionIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                    })
+                }
 
                 // IIa EXPOSURE: Exception case ALL BACK MOLARS
-                if(action['18'].expose && action['28'].expose && action['38'].expose && action['48'].expose ){
-                  requestList.append('li').html('EXPOSE all four third molars (18, 28, 38 and 48).')
-                  // Add all other extractions 
-                  exposureIDs.forEach(d => {
-                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
-                    if([18, 28, 38, 48].indexOf(toothID) === -1){
-                      requestList.append('li').html('EXTRACT '+toothName+' ('+toothID+')')  
-                    }
-                  })  
+                if (action['18'].expose && action['28'].expose && action['38'].expose && action['48'].expose) {
+                    requestList.append('li').html('EXPOSE all four third molars (18, 28, 38 and 48).')
+                    // Add all other extractions 
+                    exposureIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if ([18, 28, 38, 48].indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXTRACT ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
 
-                // IIb. EXPOSURE: Exception case SAME  LEFT AND RIGHT
-                } else if(exposurePairs.length > 0){          
-                  let exceptions = []
-                  exposurePairs.forEach( pairObj =>{
-                    requestList.append('li').html('EXPOSE '+pairObj.type)
-                    exceptions = exceptions.concat(pairObj.pair)                  })
-                  // Add all other extractions 
-                  exposureIDs.forEach(d => {
-                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
-                    if(exceptions.indexOf(toothID) === -1){
-                      requestList.append('li').html('EXPOSE '+toothName+' ('+toothID+')')  
-                    }
-                  })  
+                    // IIb. EXPOSURE: Exception case SAME  LEFT AND RIGHT
+                } else if (exposurePairs.length > 0) {
+                    let exceptions = []
+                    exposurePairs.forEach(pairObj => {
+                        requestList.append('li').html('EXPOSE ' + pairObj.type)
+                        exceptions = exceptions.concat(pairObj.pair)
+                    })
+                    // Add all other extractions 
+                    exposureIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        if (exceptions.indexOf(toothID) === -1) {
+                            requestList.append('li').html('EXPOSE ' + toothName + ' (' + toothID + ')')
+                        }
+                    })
 
-                // IIc. EXPOSURE: STANDARD CASE                 
-                } else {       
-                  exposureIDs.forEach(d => {
-                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
-                    requestList.append('li').html('EXPOSE '+toothName+' ('+toothID+')')
-                  })
-                }    
-     
+                    // IIc. EXPOSURE: STANDARD CASE                 
+                } else {
+                    exposureIDs.forEach(d => {
+                        const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                        requestList.append('li').html('EXPOSE ' + toothName + ' (' + toothID + ')')
+                    })
+                }
+
                 // SURFACE TREATMENTS: restore and assess / manage treatments, with specified area; or whole tooth
                 const restoreContainer = requestDiv.append('div').attr('id', 'restore-container'),
-                  restoreList = restoreContainer.append('ul'),
-                  assessManageContainer = requestDiv.append('div').attr('id', 'assessManage-container'),
-                  assessManageList = assessManageContainer.append('ul')
+                    restoreList = restoreContainer.append('ul'),
+                    assessManageContainer = requestDiv.append('div').attr('id', 'assessManage-container'),
+                    assessManageList = assessManageContainer.append('ul')
 
                 surfaceIDs.forEach(d => {
-                  const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
+                    const toothID = d.toothID, toothName = data.byId[toothID].name.toLowerCase()
 
-                  // III. RESTORE
-                  if(Object.keys(d.surfaceDetails.restore).length > 0){           // Check for restore
-                    const areasToTreat = Object.values(d.surfaceDetails.restore)       
+                    // III. RESTORE
+                    if (Object.keys(d.surfaceDetails.restore).length > 0) {           // Check for restore
+                        const areasToTreat = Object.values(d.surfaceDetails.restore)
 
-                    // Case A: Whole of tooth selected         
-                    if(areasToTreat.indexOf('whole') > -1) {
-                      d3.selectAll('#toothParts_'+toothID+' > *').classed('treatAll', true)   
-                      restoreList.innterHTML = ''               
-                      restoreList.append('li').html('RESTORE '+toothName+' ('+toothID+')')
-                    
-                    // Case B: If area is 'blank' for every area'; do not include any area description
-                    } else if(areasToTreat.filter( d => d !== 'blank').length === 0){
-                        const surfacesToTreat = Object.keys(d.surfaceDetails.restore),
-                          orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1),
-                          joinedSurfaces = (function(){
-                            let orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1)
-                            if(orderedSurfacesToTreat[0] === "Mesial" && orderedSurfacesToTreat.length === 2){
-                              orderedSurfacesToTreat[0] = "Mesio"
-                            }
-                            return orderedSurfacesToTreat.join('-').toLowerCase()
-                          })()
-                        restoreList.append('li').html('RESTORE '+toothName+' ('+toothID+') '+joinedSurfaces )
+                        // Case A: Whole of tooth selected         
+                        if (areasToTreat.indexOf('whole') > -1) {
+                            d3.selectAll('#toothParts_' + toothID + ' > *').classed('treatAll', true)
+                            restoreList.innterHTML = ''
+                            restoreList.append('li').html('RESTORE ' + toothName + ' (' + toothID + ')')
 
-                    // Case C. If there are 'blank' and 'specified' areas, 
-                    } else if( areasToTreat.filter( d => d !== 'blank').length > 0 && areasToTreat.filter( d => d === 'blank').length > 0 ){
-                      // I. Create a (combined) "blank"  area sentence
-                      const blankSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter( key => d.surfaceDetails.restore[key] === 'blank')
-                      let blankOrderedSurfacesToTreat = surfaceOrder.filter(d => blankSurfacesToTreat.indexOf(d) > -1),
-                          blankJoinedSurfaces = (function(){
-                            if(blankOrderedSurfacesToTreat[0] === "Mesial" && blankOrderedSurfacesToTreat.length === 2){
-                              blankOrderedSurfacesToTreat[0] = "Mesio"
-                            }
-                            return blankOrderedSurfacesToTreat.join('-').toLowerCase()
-                          })(),
-                          blankSentence = 'RESTORE '+toothName+' ('+toothID+') '+blankJoinedSurfaces
+                            // Case B: If area is 'blank' for every area'; do not include any area description
+                        } else if (areasToTreat.filter(d => d !== 'blank').length === 0) {
+                            const surfacesToTreat = Object.keys(d.surfaceDetails.restore),
+                                orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1),
+                                joinedSurfaces = (function () {
+                                    let orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1)
+                                    if (orderedSurfacesToTreat[0] === "Mesial" && orderedSurfacesToTreat.length === 2) {
+                                        orderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return orderedSurfacesToTreat.join('-').toLowerCase()
+                                })()
+                            restoreList.append('li').html('RESTORE ' + toothName + ' (' + toothID + ') ' + joinedSurfaces)
 
-                      restoreList.append('li').html(blankSentence)
+                            // Case C. If there are 'blank' and 'specified' areas, 
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0 && areasToTreat.filter(d => d === 'blank').length > 0) {
+                            // I. Create a (combined) "blank"  area sentence
+                            const blankSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter(key => d.surfaceDetails.restore[key] === 'blank')
+                            let blankOrderedSurfacesToTreat = surfaceOrder.filter(d => blankSurfacesToTreat.indexOf(d) > -1),
+                                blankJoinedSurfaces = (function () {
+                                    if (blankOrderedSurfacesToTreat[0] === "Mesial" && blankOrderedSurfacesToTreat.length === 2) {
+                                        blankOrderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return blankOrderedSurfacesToTreat.join('-').toLowerCase()
+                                })(),
+                                blankSentence = 'RESTORE ' + toothName + ' (' + toothID + ') ' + blankJoinedSurfaces
 
-                       // II. Get indiviudal surface-areas in ordered array
-                      const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter( key => d.surfaceDetails.restore[key] !== 'blank'),
-                        specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
-                        stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase()+' '+action[toothID]["surface"][surface]["type"]),
-                        stemlast =  stemArray.length > 1 ? stemArray.pop() : null,
-                        stemExpanded = stemlast ? stemArray.join(', ')+' and '+stemlast : stemArray[0],
-                        sentence = 'RESTORE '+toothName+' ('+toothID+') '+stemExpanded                
+                            restoreList.append('li').html(blankSentence)
 
-                      restoreList.append('li').html(sentence)
+                            // II. Get indiviudal surface-areas in ordered array
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter(key => d.surfaceDetails.restore[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'RESTORE ' + toothName + ' (' + toothID + ') ' + stemExpanded
 
-                    // Case D. There are only specified surfaces: add these as individual dot points
-                    } else if(areasToTreat.filter( d => d !== 'blank').length > 0 ){
-                      const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter( key => d.surfaceDetails.restore[key] !== 'blank'),
-                        specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
-                        stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase()+' '+action[toothID]["surface"][surface]["type"]),
-                        stemlast =  stemArray.length > 1 ? stemArray.pop() : null,
-                        stemExpanded = stemlast ? stemArray.join(', ')+' and '+stemlast : stemArray[0],
-                        sentence = 'RESTORE '+toothName+' ('+toothID+') '+stemExpanded                
+                            restoreList.append('li').html(sentence)
 
-                      restoreList.append('li').html(sentence)
+                            // Case D. There are only specified surfaces: add these as individual dot points
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0) {
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.restore).filter(key => d.surfaceDetails.restore[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'RESTORE ' + toothName + ' (' + toothID + ') ' + stemExpanded
+
+                            restoreList.append('li').html(sentence)
+                        }
                     }
-                  }
-            
-                  // IV  For assess and manage
-                  if(Object.keys(d.surfaceDetails.assessManage).length > 0){      // Check for assess and manage
-                    const areasToTreat = Object.values(d.surfaceDetails.assessManage)
-                    // Case A: For whoel of tootch
-                    if(areasToTreat.indexOf('whole') > -1) {
-                      d3.selectAll('#toothParts_'+toothID+' > *').classed('treatAll', true)
-                      assessManageList.innterHTML = ''     
-                      assessManageList.append('li').html('ASSESS AND MANAGE '+toothName+' ('+toothID+') ')
-                         
-                    // Case B: If area is 'blank' for every area'; do not include any area description
-                    } else if(areasToTreat.filter( d => d !== 'blank').length === 0){
-                      const surfacesToTreat = Object.keys(d.surfaceDetails.assessManage),
-                        orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1),
-                        joinedSurfaces = (function(){
-                          let orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1)
-                          if(orderedSurfacesToTreat[0] === "Mesial" && orderedSurfacesToTreat.length === 2){
-                            orderedSurfacesToTreat[0] = "Mesio"
-                          }
-                          return orderedSurfacesToTreat.join('-').toLowerCase()
-                        })()
-                      assessManageList.append('li').html('ASSESS AND MANAGE '+toothName+' ('+toothID+') '+joinedSurfaces )
 
-                    // Case C. If there are 'blank' and 'specified' areas, 
-                    } else if( areasToTreat.filter( d => d !== 'blank').length > 0 && areasToTreat.filter( d => d === 'blank').length > 0 ){
-                      // I. Create a (combined) "blank"  area sentence
-                      const blankSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter( key => d.surfaceDetails.assessManage[key] === 'blank')
-                      let blankOrderedSurfacesToTreat = surfaceOrder.filter(d => blankSurfacesToTreat.indexOf(d) > -1),
-                          blankJoinedSurfaces = (function(){
-                            if(blankOrderedSurfacesToTreat[0] === "Mesial" && blankOrderedSurfacesToTreat.length === 2){
-                              blankOrderedSurfacesToTreat[0] = "Mesio"
-                            }
-                            return blankOrderedSurfacesToTreat.join('-').toLowerCase()
-                          })(),
-                          blankSentence = 'ASSESS AND MANAGE '+toothName+' ('+toothID+') '+blankJoinedSurfaces
+                    // IV  For assess and manage
+                    if (Object.keys(d.surfaceDetails.assessManage).length > 0) {      // Check for assess and manage
+                        const areasToTreat = Object.values(d.surfaceDetails.assessManage)
+                        // Case A: For whoel of tootch
+                        if (areasToTreat.indexOf('whole') > -1) {
+                            d3.selectAll('#toothParts_' + toothID + ' > *').classed('treatAll', true)
+                            assessManageList.innterHTML = ''
+                            assessManageList.append('li').html('ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ')
 
-                      assessManageList.append('li').html(blankSentence)
+                            // Case B: If area is 'blank' for every area'; do not include any area description
+                        } else if (areasToTreat.filter(d => d !== 'blank').length === 0) {
+                            const surfacesToTreat = Object.keys(d.surfaceDetails.assessManage),
+                                orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1),
+                                joinedSurfaces = (function () {
+                                    let orderedSurfacesToTreat = surfaceOrder.filter(d => surfacesToTreat.indexOf(d) > -1)
+                                    if (orderedSurfacesToTreat[0] === "Mesial" && orderedSurfacesToTreat.length === 2) {
+                                        orderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return orderedSurfacesToTreat.join('-').toLowerCase()
+                                })()
+                            assessManageList.append('li').html('ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + joinedSurfaces)
 
-                       // II. Get indiviudal surface-areas in ordered array
-                      const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter( key => d.surfaceDetails.assessManage[key] !== 'blank'),
-                        specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
-                        stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase()+' '+action[toothID]["surface"][surface]["type"]),
-                        stemlast =  stemArray.length > 1 ? stemArray.pop() : null,
-                        stemExpanded = stemlast ? stemArray.join(', ')+' and '+stemlast : stemArray[0],
-                        sentence = 'ASSESS AND MANAGE '+toothName+' ('+toothID+') '+stemExpanded                
+                            // Case C. If there are 'blank' and 'specified' areas, 
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0 && areasToTreat.filter(d => d === 'blank').length > 0) {
+                            // I. Create a (combined) "blank"  area sentence
+                            const blankSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter(key => d.surfaceDetails.assessManage[key] === 'blank')
+                            let blankOrderedSurfacesToTreat = surfaceOrder.filter(d => blankSurfacesToTreat.indexOf(d) > -1),
+                                blankJoinedSurfaces = (function () {
+                                    if (blankOrderedSurfacesToTreat[0] === "Mesial" && blankOrderedSurfacesToTreat.length === 2) {
+                                        blankOrderedSurfacesToTreat[0] = "Mesio"
+                                    }
+                                    return blankOrderedSurfacesToTreat.join('-').toLowerCase()
+                                })(),
+                                blankSentence = 'ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + blankJoinedSurfaces
 
-                      assessManageList.append('li').html(sentence)
+                            assessManageList.append('li').html(blankSentence)
 
-                    // Case D. There are only specified surfaces: add these as individual dot points
-                    } else if(areasToTreat.filter( d => d !== 'blank').length > 0 ){
-                      // Add indiviudal surface-area sentences
-                      const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter( key => d.surfaceDetails.assessManage[key] !== 'blank'),
-                        specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
-                        stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase()+' '+action[toothID]["surface"][surface]["type"]),
-                        stemlast =  stemArray.length > 1 ? stemArray.pop() : null,
-                        stemExpanded = stemlast ? stemArray.join(', ')+' and '+stemlast : stemArray[0],
-                        sentence = 'ASSESS AND MANAGE '+toothName+' ('+toothID+') '+stemExpanded                
+                            // II. Get indiviudal surface-areas in ordered array
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter(key => d.surfaceDetails.assessManage[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + stemExpanded
 
-                      assessManageList.append('li').html(sentence)
-                    } 
-                  }          
-              })           
+                            assessManageList.append('li').html(sentence)
+
+                            // Case D. There are only specified surfaces: add these as individual dot points
+                        } else if (areasToTreat.filter(d => d !== 'blank').length > 0) {
+                            // Add indiviudal surface-area sentences
+                            const specifiedSurfacesToTreat = Object.keys(d.surfaceDetails.assessManage).filter(key => d.surfaceDetails.assessManage[key] !== 'blank'),
+                                specifiedOrderedSurfacesToTreat = surfaceOrder.filter(d => specifiedSurfacesToTreat.indexOf(d) > -1),
+                                stemArray = specifiedOrderedSurfacesToTreat.map(surface => surface.toLowerCase() + ' ' + action[toothID]["surface"][surface]["type"]),
+                                stemlast = stemArray.length > 1 ? stemArray.pop() : null,
+                                stemExpanded = stemlast ? stemArray.join(', ') + ' and ' + stemlast : stemArray[0],
+                                sentence = 'ASSESS AND MANAGE ' + toothName + ' (' + toothID + ') ' + stemExpanded
+
+                            assessManageList.append('li').html(sentence)
+                        }
+                    }
+                })
             }
-          }
+        }
 
-          // Warn the user when leaving the page
-            window.onbeforeunload = () => "Make sure to save your from to PDF before closing this tool."     
+        // Warn the user when leaving the page
+        window.onbeforeunload = () => "Make sure to save your from to PDF before closing this tool."
 
-            window.onkeydown = function(e){
-              // if(e.keyCode == 91){                 
-              //   d3.selectAll('.toothPart').classed('displayColour', !d3.select('.toothPart').classed('displayColour'))
-              // }
-            }
 
-      </script> 
-    </body>
+
+    </script>
+</body>
+
 </html>
