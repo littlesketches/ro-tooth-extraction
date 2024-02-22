@@ -23,9 +23,33 @@
         }
 
         /* General styling and typography */
+        body, 
+        input{ 
+            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
+            font-size: 10pt;
+        }
+        svg,
+        .bold {
+            font-family: 'NeusaNext-Bold', Helvetica, Arial, 'sans-serif';
+        }
+
+        body, 
+        input{ 
+            font-family: 'Aptos', Helvetica, Arial, 'sans-serif';
+            font-size: 10pt;
+            font-weight: 400;
+        }
+        svg,
+        .bold {
+            font-family: 'Aptos', Helvetica, Arial, 'sans-serif';
+            font-weight: bold;
+        }
+
+
         .hidden {
             display: none;
         }
+
 
         .label,
         .field,
@@ -35,18 +59,13 @@
         input {
             display: inline-flex;
             background: none;
-            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
             font-size: 10pt;
             padding-top: 2mm;
         }
-        .bold {
-            font-size: 10pt;
-            font-family: 'NeusaNext-Bold', Helvetica, Arial, 'sans-serif';
-            font-weight: bold;
-        }
+
 
         select.inline-selector {
-            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
+            /* font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif'; */
             background: none;
             border: none;
             -webkit-appearance: none;
@@ -121,7 +140,6 @@
         }
 
         #regards {
-            font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
             font-size: 10pt;
             margin-bottom: 25mm;
             font-weight: normal;
@@ -220,10 +238,6 @@
         }
 
         /* SVG Digaram styling*/
-        svg {
-            font-family: 'NeusaNext-Bold', 'Roboto', Helvetica, Arial, 'sans-serif';
-        }
-
         .visGrid {
             stroke: #000;
             stroke-width: 0.5px;
