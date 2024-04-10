@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Riversdale Ortho Teeth Extraction Form Tool">
+
     <!-- STYLING-->
     <style>
         @font-face {
@@ -109,7 +110,7 @@
         .field {
             /*border-bottom: dashed 0.5px #000;*/
             width: 50%;
-            margin-left: 1rem;
+            /* margin-left: 1rem; */
             text-align: left;
         }
 
@@ -143,7 +144,7 @@
             font-size: 10pt;
             margin-bottom: 25mm;
             font-weight: normal;
-            margin-left: 4mm
+            /* margin-left: 4mm */
         }
 
         /* Layout */
@@ -238,6 +239,9 @@
         }
 
         /* SVG Digaram styling*/
+        svg{
+            overflow: visible;
+        }
         .visGrid {
             stroke: #000;
             stroke-width: 0.5px;
@@ -493,10 +497,10 @@
                     <label for="">Photo marking relevant teeth</label>
                 </form>
             </div>
-
+            <div id="otherLabel" class='label bold'></div>
+            <div id="otherAttachment" class='field name'></div>
         </div>
-        <div id="otherLabel" class='label bold'></div>
-        <div id="otherAttachment" class='field name'></div>
+
         </div>
         <!-- PATIENT INFORMATION FIELDS -->
         <div id="patient">
@@ -538,7 +542,7 @@
         <!-- TOOTH DIAGRAM -->
         <div id="teethDiagram-container">
             <svg id="teethDiagram" width="100%" height="100%" viewBox="-1.5 -115 3 168">
-                <g transform="translate(0, -30)">
+                <g transform="translate(0, -20)">
                     <!-- Diagram background elements -->
                     <g id="teethVis-background">
                         <path id="grid_yAxis" class="visGrid" fill="none" d="M0-60v122.5" />
