@@ -24,6 +24,9 @@
         }
 
         /* General styling and typography */
+        body {
+            margin: 0
+        }
         body, 
         input{ 
             font-family: 'NeusaNext-Light', Helvetica, Arial, 'sans-serif';
@@ -150,7 +153,7 @@
         /* Layout */
         #toothExtraction-form {
             display: grid;
-            grid-template-columns: 20mm 80mm 6mm 94mm 20mm;
+            grid-template-columns: 19mm 81mm 6mm 95mm 18mm;
             grid-template-rows: 50mm 23mm 5mm 30mm 35mm 80mm 27mm;
             grid-template-areas:
                 ". . . . ."
@@ -165,10 +168,12 @@
         #bg-letterhead {
             grid-area: 1 / 1 / 7 / 6;
             width: 100%;
+            z-index: -2;
         }
 
         #bg-letterhead img {
             width: 100%;
+            transform: translateX(-1mm);
         }
 
         #attention {
