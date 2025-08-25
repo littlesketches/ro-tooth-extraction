@@ -1,0 +1,53 @@
+toothID	toothName	type	name_Q1	name_Q2	name_Q3	name_Q4	name_middle	reportOrder	rotation	xPos	yPos	side	section
+55	Maxillary right <span class = "deciduous">deciduous</span> second molar	deciduous	Mesial	Palatal	Distal	Buccal	Occlusal	13	-45	-20	-13	left	upper
+54	Maxillary right <span class = "deciduous">deciduous</span> first molar	deciduous	Mesial	Palatal	Distal	Buccal	Occlusal	12	-20	-18	-20	left	upper
+53	Maxillary right <span class = "deciduous">deciduous</span> cuspid	deciduous	Mesial	Palatal	Distal	Labial	Incisal	11	-5	-15	-26.5	left	upper
+52	Maxillary right <span class = "deciduous">deciduous</span> lateral incisor	deciduous	Mesial	Palatal	Distal	Labial	Incisal	10	5	-10	-32	left	upper
+51	Maxillary right <span class = "deciduous">deciduous</span> central incisor	deciduous	Mesial	Palatal	Distal	Labial	Incisal	9	45	-3.5	-35	left	upper
+61	Maxillary left <span class = "deciduous">deciduous</span> central incisor	deciduous	Mesial	Labial	Distal	Palatal	Incisal	22	-130	3.5	-35	right	upper
+62	Maxillary left <span class = "deciduous">deciduous</span> lateral incisor	deciduous	Mesial	Labial	Distal	Palatal	Incisal	23	-95	10	-32	right	upper
+63	Maxillary left <span class = "deciduous">deciduous</span> cuspid	deciduous	Mesial	Labial	Distal	Palatal	Incisal	24	-85	15	-26.5	right	upper
+64	Maxillary left <span class = "deciduous">deciduous</span> first molar	deciduous	Mesial	Buccal	Distal	Palatal	Occlusal	25	-70	18	-20	right	upper
+65	Maxillary left <span class = "deciduous">deciduous</span> second molar	deciduous	Mesial	Buccal	Distal	Palatal	Occlusal	26	-45	20	-13	right	upper
+85	Mandibular right <span class = "deciduous">deciduous</span> second molar	deciduous	Distal	Lingual	Mesial	Buccal	Occlusal	52	-45	-20	13	left	lower
+84	Mandibular right <span class = "deciduous">deciduous</span> first molar	deciduous	Distal	Lingual	Mesial	Buccal	Occlusal	51	-60	-18	20	left	lower
+83	Mandibular right <span class = "deciduous">deciduous</span> cuspid	deciduous	Distal	Lingual	Mesial	Labial	Incisal	50	-85	-15	26.5	left	lower
+82	Mandibular right <span class = "deciduous">deciduous</span> lateral incisor	deciduous	Distal	Lingual	Mesial	Labial	Incisal	49	-105	-10	32	left	lower
+81	Mandibular right <span class = "deciduous">deciduous</span> central incisor	deciduous	Distal	Lingual	Mesial	Labial	Incisal	48	-135	-3.5	35	left	lower
+71	Mandibular left <span class = "deciduous">deciduous</span> central incisor	deciduous	Distal	Labial	Mesial	Lingual	Incisal	35	45	3.5	35	right	lower
+72	Mandibular left <span class = "deciduous">deciduous</span> lateral incisor	deciduous	Distal	Labial	Mesial	Lingual	Incisal	36	15	10	32	right	lower
+73	Mandibular left <span class = "deciduous">deciduous</span> cuspid	deciduous	Distal	Labial	Mesial	Lingual	Incisal	37	-5	15	26.5	right	lower
+74	Mandibular left <span class = "deciduous">deciduous</span> first molar	deciduous	Distal	Buccal	Mesial	Lingual	Occlusal	38	-30	18	20	right	lower
+75	Mandibular left <span class = "deciduous">deciduous</span> second molar	deciduous	Distal	Buccal	Mesial	Lingual	Occlusal	39	-45	20	13	right	lower
+18	Maxillary right third molar	permanent	Mesial	Palatal	Distal	Buccal	Occlusal	8	-45	-35	-13	left	upper
+17	Maxillary right <span class = "permanent">permanent</span> second molar	permanent	Mesial	Palatal	Distal	Buccal	Occlusal	7	-30	-34	-20.25	left	upper
+16	Maxillary right <span class = "permanent">permanent</span> first molar	permanent	Mesial	Palatal	Distal	Buccal	Occlusal	6	-20	-32	-27.25	left	upper
+15	Maxillary right second bicuspid	permanent	Mesial	Palatal	Distal	Buccal	Occlusal	5	-10	-28.5	-34	left	upper
+14	Maxillary right first bicuspid	permanent	Mesial	Palatal	Distal	Buccal	Occlusal	4	5	-23.5	-40	left	upper
+13	Maxillary right <span class = "permanent">permanent</span> cuspid	permanent	Mesial	Palatal	Distal	Labial	Incisal	3	10	-17.25	-44.5	left	upper
+12	Maxillary right <span class = "permanent">permanent</span> lateral incisor	permanent	Mesial	Palatal	Distal	Labial	Incisal	2	20	-10.75	-48	left	upper
+11	Maxillary right <span class = "permanent">permanent</span> central incisor	permanent	Mesial	Palatal	Distal	Labial	Incisal	1	45	-3.75	-50	left	upper
+21	Maxillary left <span class = "permanent">permanent</span> central incisor	permanent	Mesial	Labial	Distal	Palatal	Incisal	14	-135	3.75	-50	right	upper
+22	Maxillary left <span class = "permanent">permanent</span> lateral incisor	permanent	Mesial	Labial	Distal	Palatal	Incisal	15	-110	10.75	-48	right	upper
+23	Maxillary left <span class = "permanent">permanent</span> cuspid	permanent	Mesial	Labial	Distal	Palatal	Incisal	16	-100	17.25	-44.5	right	upper
+24	Maxillary left first bicuspid	permanent	Mesial	Buccal	Distal	Palatal	Occlusal	17	-95	23.5	-40	right	upper
+25	Maxillary left second bicuspid	permanent	Mesial	Buccal	Distal	Palatal	Occlusal	18	-80	28.5	-34	right	upper
+26	Maxillary left <span class = "permanent">permanent</span> first molar	permanent	Mesial	Buccal	Distal	Palatal	Occlusal	19	-70	32	-27.25	right	upper
+27	Maxillary left <span class = "permanent">permanent</span> second molar	permanent	Mesial	Buccal	Distal	Palatal	Occlusal	20	-60	34	-20.25	right	upper
+28	Maxillary left third molar	permanent	Mesial	Buccal	Distal	Palatal	Occlusal	21	-45	35	-13	right	upper
+48	Mandibular right third molar	permanent	Distal	Lingual	Mesial	Buccal	Occlusal	47	-45	-35	13	left	lower
+47	Mandibular right <span class = "permanent">permanent</span> second molar	permanent	Distal	Lingual	Mesial	Buccal	Occlusal	46	-55	-34	20.25	left	lower
+46	Mandibular right <span class = "permanent">permanent</span> first molar	permanent	Distal	Lingual	Mesial	Buccal	Occlusal	45	-60	-32	27.25	left	lower
+45	Mandibular right second bicuspid	permanent	Distal	Lingual	Mesial	Buccal	Occlusal	44	-70	-28.5	34	left	lower
+44	Mandibular right first bicuspid	permanent	Distal	Lingual	Mesial	Buccal	Occlusal	43	-85	-23.5	40	left	lower
+43	Mandibular right <span class = "permanent">permanent</span> cuspid	permanent	Distal	Lingual	Mesial	Labial	Incisal	42	-95	-17.25	44.5	left	lower
+42	Mandibular right <span class = "permanent">permanent</span> lateral incisor	permanent	Distal	Lingual	Mesial	Labial	Incisal	41	-120	-10.75	48	left	lower
+41	Mandibular right <span class = "permanent">permanent</span> central incisor	permanent	Distal	Lingual	Mesial	Labial	Incisal	40	-135	-3.75	50	left	lower
+31	Mandibular left <span class = "permanent">permanent</span> central incisor	permanent	Distal	Labial	Mesial	Lingual	Incisal	27	45	3.75	50	right	lower
+32	Mandibular left <span class = "permanent">permanent</span> lateral incisor	permanent	Distal	Labial	Mesial	Lingual	Incisal	28	30	10.75	48	right	lower
+33	Mandibular left <span class = "permanent">permanent</span> cuspid	permanent	Distal	Labial	Mesial	Lingual	Incisal	29	5	17.25	44.5	right	lower
+34	Mandibular left first bicuspid	permanent	Distal	Buccal	Mesial	Lingual	Occlusal	30	-5	23.5	40	right	lower
+35	Mandibular left second bicuspid	permanent	Distal	Buccal	Mesial	Lingual	Occlusal	31	-20	28.5	34	right	lower
+36	Mandibular left <span class = "permanent">permanent</span> first molar	permanent	Distal	Buccal	Mesial	Lingual	Occlusal	32	-30	32	27.25	right	lower
+37	Mandibular left second molar	permanent	Distal	Buccal	Mesial	Lingual	Occlusal	33	-35	34	20.25	right	lower
+38	Mandibular left third molar	permanent	Distal	Buccal	Mesial	Lingual	Occlusal	34	-45	35	13	right	lower
